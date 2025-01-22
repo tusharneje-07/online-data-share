@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
+:root {
     --light-text: #f8f8f8;
     --dark-text: #1c1c1c;
 }
+

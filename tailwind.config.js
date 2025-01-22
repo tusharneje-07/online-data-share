@@ -4,6 +4,10 @@ module.exports = {
   theme: {
     extend: {
 
+      spacing: {
+        'halfp': '0.6rem',
+      },
+
       backgroundImage: {
         
       },
@@ -33,7 +37,13 @@ module.exports = {
         'Ubuntu': ['Ubuntu', 'sans-serif'], // Add custom font
       },
 
+      filter: {
+        'custom-calendar-dark': 'invert(19%) sepia(28%) saturate(537%) hue-rotate(193deg) brightness(85%) contrast(95%)',
+      },
+
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-filters'),
+  ],
 };

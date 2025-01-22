@@ -94,7 +94,7 @@
     <main class="m-4 md:m-8 z-0">
         <!-- Heading -->
         <div class="flex flex-row p-5">
-            <p class="text-lg font-bold">Account</p>
+            <p style="font-size: 1.5rem;" class="font-bold">Edit Account Details</p>
         </div>
 
 
@@ -104,44 +104,115 @@
             <div class="relative border border-theme-dark dark:border-theme-light box-border w-full">
                 <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">General Info</p>
 
-                <div
-                    class="mb-5 flex flex-col md:flex-row w-full justify-center items-center text-center md:text-left md:justify-start">
+                <div class="mb-5 flex flex-col w-full md:w-auto justify-center items-center text-center">
+
                     <!-- Profile -->
-                    <div
-                        class="mt-8 rounded-full overflow-hidden w-40 h-40 border-4 border-theme-dark dark:border-theme-light">
-                        <img src="./imgs/prf.jpg" alt="Profile Photo">
-                    </div>
+                    <div class="flex flex-col gap-5 items-center">
+                        <div
+                            class="mt-8 rounded-full overflow-hidden w-40 h-40 border-4 border-theme-dark dark:border-theme-light">
+                            <img src="./imgs/prf.jpg" alt="Profile Photo">
 
-                    <!-- Name -->
-                    <div class="block pb-2 h-full mt-2 md:m-0">
-                        <p class="text-lg">Tushar Sadashiv Neje</p>
-                    </div>
+                        </div>
 
+                        <!-- Name -->
+                        <div class="flex flex-row">
+                            <div
+                                class="flex justify-center items-center rounded-s-md dark:bg-theme-light bg-theme-dark">
+                                <p class="text-lg font-semibold px-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="dark:fill-dark-text fill-light-text"
+                                        height="30px" viewBox="0 -960 960 960" width="24px">
+                                        <path
+                                            d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
+                                    </svg>
+                                </p>
+                            </div>
+                            <div class="flex flex-row p-4 rounded-e-md dark:bg-odd-line-dark bg-odd-line-light">
+                                <p class="text-lg font-semibold">
+
+                                <div class="relative w-full">
+                                    <!-- INPUT-1 -->
+                                    <input class="bg-transparent outline-none" type="text" id="inp1" name="inp1"
+                                        value="Tushar Sadashiv Neje">
+                                </div>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
                     <!-- General Info -->
-                    <div class="inline-flex justify-evenly gap-4 mt-5 w-full px-4 flex-nowrapw-full">
+                    <div class="inline-flex justify-evenly gap-4 mt-5 w-full px-4 flex-wrap">
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Date of Birth</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">15/07/2005</p>
+                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-sm">
+
+                                <!-- INPUT-2 -->
+                                <p class="text-sm w-full">
+
+                                <div class="relative w-full">
+                                    <!-- Input Field -->
+                                    <input type="date" id="inp2" name="inp2" value="2005-07-15"
+                                        class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark"
+                                        id="date-picker" />
+                                </div>
+                                </p>
+
+
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Height</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">06:55 AM</p>
+
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-3 -->
+                                        <input type="number" id="inp3" name="inp3" value="5.5"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp3" id="inp3">
+                                    </div>
+                                    </p>
+                                </div>
+
+                                <div
+                                    class="bg-theme-dark dark:bg-theme-light flex justify-center items-center text-sm rounded-e-sm">
+                                    <p class="font-bold px-3 text-light-text dark:text-dark-text">ft.</p>
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Weight</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">21 Yr</p>
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-4 -->
+                                        <input type="number" id="inp3" name="inp3" value="5.5"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
+
+                                <div
+                                    class="bg-theme-dark dark:bg-theme-light flex justify-center items-center text-sm rounded-e-sm">
+                                    <p class="font-bold px-3 text-light-text dark:text-dark-text">kg.</p>
+                                </div>
                             </div>
                         </div>
 
                     </div>
+
                 </div>
             </div>
 
@@ -156,16 +227,42 @@
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Location of Birth</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Ichalkaranji</p>
+                            <!-- INPUT-5 -->
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-5 -->
+                                        <input type="text" id="inp3" name="inp3" value="Ichalkaranji"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Time of Birth</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">06:55 AM</p>
+                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-sm">
+
+                                <!-- INPUT-6 -->
+                                <p class="text-sm w-full">
+
+                                <div class="relative w-full">
+
+
+                                    <input type="time" value="06:55"
+                                        class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark"
+                                        id="date-picker" />
+                                </div>
+                                </p>
+
+
                             </div>
                         </div>
                     </div>
@@ -174,6 +271,62 @@
 
 
             </div>
+
+            <!-- JOB/BUSINESS INFO -->
+            <div class="relative border border-theme-dark dark:border-theme-light box-border w-full">
+                <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Job/Business Info
+                </p>
+
+                <div
+                    class="mb-5 flex flex-col md:flex-row w-full justify-center items-center text-center md:text-left md:justify-start">
+                    <!-- Birth Info -->
+                    <div class="inline-flex justify-evenly gap-4 mt-5 w-full px-4 flex-wrap">
+
+                        <div class="w-full flex flex-col text-start gap-1">
+                            <p class="text-xs">Job/Business</p>
+                            <div class="flex">
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-7 -->
+                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Job Description
+                                        </textarea>
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full flex flex-col text-start gap-1">
+                            <p class="text-xs">Income</p>
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-8 -->
+                                        <input type="number" id="inp3" name="inp3" value="5.5" class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
+
+                                <div class="bg-theme-dark dark:bg-theme-light flex justify-center items-center text-sm rounded-e-sm">
+                                    <p class="font-bold px-3 text-light-text dark:text-dark-text">LPA</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
 
             <!-- EDUCATION INFO -->
             <div class="relative border border-theme-dark dark:border-theme-light box-border w-full">
@@ -186,38 +339,18 @@
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Education</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Ichalkaranji</p>
-                            </div>
-                        </div>
-                    </div>
+                            <div class="flex">
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
 
-                </div>
-
-
-            </div>
-
-
-            <!-- JOB/BUSINESS INFO -->
-            <div class="relative border border-theme-dark dark:border-theme-light box-border w-full">
-                <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Job/Business Info</p>
-
-                <div
-                    class="mb-5 flex flex-col md:flex-row w-full justify-center items-center text-center md:text-left md:justify-start">
-                    <!-- Birth Info -->
-                    <div class="inline-flex justify-evenly gap-4 mt-5 w-full px-4 flex-wrap">
-
-                        <div class="w-full flex flex-col text-start gap-1">
-                            <p class="text-xs">Job/Business</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">JOB---</p>
-                            </div>
-                        </div>
-
-                        <div class="w-full flex flex-col text-start gap-1">
-                            <p class="text-xs">Income</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">85 LPA</p>
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-9 -->
+                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Education Details
+                                        </textarea>
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -229,32 +362,70 @@
 
             <!-- RELIGION CAST INFO -->
             <div class="relative border border-theme-dark dark:border-theme-light box-border w-full">
-                <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Religion & Cast Info</p>
+                <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Religion & Cast
+                    Info</p>
 
                 <div
                     class="mb-5 flex flex-col md:flex-row w-full justify-center items-center text-center md:text-left md:justify-start">
 
-                    <div class="inline-flex justify-evenly gap-4 mt-5 w-full px-4 flex-wrap md:justify-evenly md:flex-nowrap">
+                    <div
+                        class="inline-flex justify-evenly gap-4 mt-5 w-full px-4 flex-wrap md:justify-evenly md:flex-nowrap">
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Religion</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Hindu</p>
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-10 -->
+                                        <input type="text" id="inp3" name="inp3" value="Hindu"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Caste</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Koshti</p>
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-11 -->
+                                        <input type="text" id="inp3" name="inp3" value="Koshti"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Sub Caste</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Hatagar Koshti</p>
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-12 -->
+                                        <input type="text" id="inp3" name="inp3" value="Hatagar Koshti"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -276,15 +447,39 @@
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Rashi</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Libra</p>
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-13 -->
+                                        <input type="text" id="inp3" name="inp3" value="Libra"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Nakshatra</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Swati</p>
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-14 -->
+                                        <input type="text" id="inp3" name="inp3" value="Swati"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -293,8 +488,20 @@
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Birth Name (Navras Nav)</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">idk</p>
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-15 -->
+                                        <input type="text" id="inp3" name="inp3" value="IDK"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -315,29 +522,69 @@
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Father's Name & Occupation</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto provident reiciendis sapiente illo debitis. Ullam sequi a accusamus dolores non voluptatum repellendus dolor, hic tempora nobis minima dicta cum dignissimos.</p>
+                            <div class="flex">
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-16 -->
+                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Father's Information
+                                        </textarea>
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Mother's Name & Occupation</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto provident reiciendis sapiente illo debitis. Ullam sequi a accusamus dolores non voluptatum repellendus dolor, hic tempora nobis minima dicta cum dignissimos.</p>
+                            <div class="flex">
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-17 -->
+                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Mother's Information
+                                        </textarea>
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Brother's Name & Occupation</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto provident reiciendis sapiente illo debitis. Ullam sequi a accusamus dolores non voluptatum repellendus dolor, hic tempora nobis minima dicta cum dignissimos.</p>
+                            <div class="flex">
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-18 -->
+                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Brother's Information
+                                        </textarea>
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Sister's Name & Occupation</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto provident reiciendis sapiente illo debitis. Ullam sequi a accusamus dolores non voluptatum repellendus dolor, hic tempora nobis minima dicta cum dignissimos.</p>
+                            <div class="flex">
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-19 -->
+                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Sisters's Information
+                                        </textarea>
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -351,7 +598,8 @@
 
             <!-- ADDRESS AND CONTACT INFO -->
             <div class="relative border border-theme-dark dark:border-theme-light box-border w-full">
-                <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Address & Contact Info</p>
+                <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Address & Contact
+                    Info</p>
 
                 <div
                     class="mb-5 flex flex-col md:flex-row w-full justify-center items-center text-center md:text-left md:justify-start">
@@ -360,15 +608,37 @@
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Address</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed odio.</p>
+                            <div class="flex">
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-16 -->
+                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Address
+                                        </textarea>
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Contact Number</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-sm">
-                                <p class="text-sm">10206484654, 265647532416</p>
+                            <div class="flex">
+
+                                <div
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+
+                                    <p class="text-sm w-full">
+                                    <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
+                                        <!-- INPUT-10 -->
+                                        <input type="text" id="inp3" name="inp3" value="123456789, 1234567890"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                            name="inp4" id="inp4">
+                                    </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -378,9 +648,6 @@
 
 
             </div>
-            
-
-
 
         </div>
 
@@ -393,7 +660,15 @@
     <br>
 
     <!-- MOBILE NAV -->
-    <div class="block fixed bg-odd-line-light dark:bg-odd-line-dark bottom-0 w-full p-4">
+    <div onclick="toggleNavBar()" id="toggleBtn"
+        class="cursor-pointer rounded-md flex justify-center items-center fixed bottom-0 right-10 w-12 h-10 -translate-y-20 border bg-theme-light dark:bg-theme-dark border-theme-dark dark:border-theme-light">
+        <svg id="navtoggleicon" class="dark:fill-theme-light fill-theme-dark transition-all duration-500"
+            xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+            <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+        </svg>
+    </div>
+
+    <div id="navbar" class="block fixed bg-odd-line-light dark:bg-odd-line-dark bottom-0 w-full p-4">
         <div class="flex flex-row justify-around">
             <!-- Wishlist -->
             <div class="inline-flex flex-col justify-center text-center items-center gap-2 cursor-pointer">
