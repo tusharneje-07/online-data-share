@@ -40,3 +40,23 @@ initializeTheme();
 
 // Add event listener to toggle switch
 toggleCheckbox.addEventListener('change', toggleTheme);
+
+
+
+function toggleNavBar(){
+    const btn = document.getElementById('toggleBtn')
+    const navbar = document.getElementById('navbar')
+    const navtoggleicon = document.getElementById('navtoggleicon')
+
+    btn.classList.toggle('-translate-y-20')
+    btn.classList.toggle('translate-y-2')
+
+    if(btn.classList.contains('-translate-y-20')){
+        navbar.classList.remove('hidden')
+        navtoggleicon.style.transform = 'rotate(0deg)';
+    }
+    else{
+        navbar.classList.add('hidden')
+        navtoggleicon.style.transform = 'rotate(180deg)';
+    }
+}

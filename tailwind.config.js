@@ -5,13 +5,28 @@ module.exports = {
     extend: {
 
       backgroundImage: {
-        'toggle-btn-grad-on': 'linear-gradient(270deg, rgba(14,0,113,1) 0%, rgba(194,194,194,1) 100%)',
-        'toggle-btn-grad-off': 'linear-gradient(90deg, rgba(14,0,113,1) 0%, rgba(194,194,194,1) 100%)',
+        
+      },
+      boxShadow: {
+        'dark-theme-shadow': '0px 0px 20px 1px #34508d;',
+        'light-theme-shadow': '0px 0px 20px 1px #adadad;',
       },
 
       colors:{
+        'theme-dark': '#0f172a',
+        'theme-light': '#fafafa',
+
+        'container-light' : '#eaeaea',
+        'container-dark' : '#162036',
+
+        'odd-line-dark' : '#22304f',
+        'odd-line-light' : '#e1e1e1',
+
         'light-text' : '#f8f8f8',
         'dark-text' : '#1c1c1c',
+
+        'toggle-btn-grad-on': '#121b2e',
+        'toggle-btn-grad-off': '#bfbfbf',
       },
 
       fontFamily: {
