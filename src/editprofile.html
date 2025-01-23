@@ -528,7 +528,9 @@
                             <div class="flex">
 
                                 <div
-                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark rounded-s-sm"
+                                    style="padding: 0.1rem;"
+                                    >
 
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
@@ -539,11 +541,11 @@
                                             <!-- Trigger -->
                                             <button
                                                 class="w-full text-left px-4 py-2 bg-transparent rounded-md focus:outline-none"
-                                                onclick="toggleDropdown()">
-                                                <span id="dropdownLabel" class="text-sm basic-input-placeholder">Select
+                                                onclick="toggleDropdown2()">
+                                                <span id="dropdownLabel2" class="text-sm basic-input-placeholder">Select
                                                     an option</span>
-                                                <input type="text" id="inp13" name="inp13" hidden>
-                                                <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon"
+                                                <input type="text" id="inp14" name="inp14" hidden>
+                                                <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon2"
                                                     class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -552,38 +554,38 @@
                                             </button>
 
                                             <!-- Dropdown menu -->
-                                            <ul id="dropdownMenu"
+                                            <ul id="dropdownMenu2"
                                                 class="absolute left-0 z-10 w-full basic-input-placeholder rounded-md shadow-md hidden">
                                                 <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
-                                                    onclick="selectOption('Data 1')">
+                                                    onclick="selectOption2('Data 1')">
                                                     Data 1
                                                 </li>
                                                 <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
-                                                    onclick="selectOption('Data 2')">
+                                                    onclick="selectOption2('Data 2')">
                                                     Data 2
                                                 </li>
                                                 <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
-                                                    onclick="selectOption('Data 3')">
+                                                    onclick="selectOption2('Data 3')">
                                                     Data 3
                                                 </li>
                                             </ul>
                                         </div>
 
                                         <script>
-                                            function toggleDropdown() {
-                                                const menu = document.getElementById('dropdownMenu');
-                                                const icon = document.getElementById('basic-dropdown-icon');
+                                            function toggleDropdown2() {
+                                                const menu = document.getElementById('dropdownMenu2');
+                                                const icon = document.getElementById('basic-dropdown-icon2');
                                                 icon.style.transform = menu.classList.contains('hidden') ? 'rotate(180deg)' : 'rotate(0deg)';
                                                 menu.classList.toggle('hidden');
 
                                             }
 
-                                            function selectOption(option) {
-                                                const label = document.getElementById('dropdownLabel');
-                                                const input = document.getElementById('inp13');
+                                            function selectOption2(option) {
+                                                const label = document.getElementById('dropdownLabel2');
+                                                const input = document.getElementById('inp14');
                                                 input.value = option;
                                                 label.textContent = option;
-                                                toggleDropdown();
+                                                toggleDropdown2();
                                             }
                                         </script>
 
