@@ -291,7 +291,9 @@
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-7 -->
-                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Job Description
+                                        <textarea
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
+                                            name="inp7" id="inp7" rows="4">Job Description
                                         </textarea>
                                     </div>
                                     </p>
@@ -309,13 +311,15 @@
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-8 -->
-                                        <input type="number" id="inp3" name="inp3" value="5.5" class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                        <input type="number" id="inp3" name="inp3" value="5.5"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
                                             name="inp4" id="inp4">
                                     </div>
                                     </p>
                                 </div>
 
-                                <div class="bg-theme-dark dark:bg-theme-light flex justify-center items-center text-sm rounded-e-sm">
+                                <div
+                                    class="bg-theme-dark dark:bg-theme-light flex justify-center items-center text-sm rounded-e-sm">
                                     <p class="font-bold px-3 text-light-text dark:text-dark-text">LPA</p>
                                 </div>
                             </div>
@@ -346,7 +350,9 @@
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-9 -->
-                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Education Details
+                                        <textarea
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
+                                            name="inp7" id="inp7" rows="4">Education Details
                                         </textarea>
                                     </div>
                                     </p>
@@ -449,15 +455,68 @@
                             <p class="text-xs">Rashi</p>
                             <div class="flex">
 
-                                <div
-                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-s-sm">
+                                <div class="relative w-full bg-odd-line-light dark:bg-odd-line-dark rounded-s-sm"
+                                    style="padding: 0.1rem;">
 
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-13 -->
-                                        <input type="text" id="inp3" name="inp3" value="Libra"
+
+                                        <div class="relative inline-block basic-input w-full rounded-md">
+                                            <!-- Trigger -->
+                                            <button
+                                                class="w-full text-left px-4 py-2 bg-transparent rounded-md focus:outline-none"
+                                                onclick="toggleDropdown()">
+                                                <span id="dropdownLabel" class="text-sm basic-input-placeholder">Select
+                                                    an option</span>
+                                                <input type="text" id="inp13" name="inp13" hidden>
+                                                <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon"
+                                                    class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+
+                                            <!-- Dropdown menu -->
+                                            <ul id="dropdownMenu"
+                                                class="absolute left-0 z-10 w-full basic-input-placeholder rounded-md shadow-md hidden">
+                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+                                                    onclick="selectOption('Data 1')">
+                                                    Data 1
+                                                </li>
+                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+                                                    onclick="selectOption('Data 2')">
+                                                    Data 2
+                                                </li>
+                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+                                                    onclick="selectOption('Data 3')">
+                                                    Data 3
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <script>
+                                            function toggleDropdown() {
+                                                const menu = document.getElementById('dropdownMenu');
+                                                const icon = document.getElementById('basic-dropdown-icon');
+                                                icon.style.transform = menu.classList.contains('hidden') ? 'rotate(180deg)' : 'rotate(0deg)';
+                                                menu.classList.toggle('hidden');
+
+                                            }
+
+                                            function selectOption(option) {
+                                                const label = document.getElementById('dropdownLabel');
+                                                const input = document.getElementById('inp13');
+                                                input.value = option;
+                                                label.textContent = option;
+                                                toggleDropdown();
+                                            }
+                                        </script>
+
+                                        <!-- <input type="text" id="inp3" name="inp3" value="Libra"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                            name="inp4" id="inp4"> -->
                                     </div>
                                     </p>
                                 </div>
@@ -474,9 +533,63 @@
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-14 -->
-                                        <input type="text" id="inp3" name="inp3" value="Swati"
+
+
+                                        <div class="relative inline-block basic-input w-full rounded-md">
+                                            <!-- Trigger -->
+                                            <button
+                                                class="w-full text-left px-4 py-2 bg-transparent rounded-md focus:outline-none"
+                                                onclick="toggleDropdown()">
+                                                <span id="dropdownLabel" class="text-sm basic-input-placeholder">Select
+                                                    an option</span>
+                                                <input type="text" id="inp13" name="inp13" hidden>
+                                                <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon"
+                                                    class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+
+                                            <!-- Dropdown menu -->
+                                            <ul id="dropdownMenu"
+                                                class="absolute left-0 z-10 w-full basic-input-placeholder rounded-md shadow-md hidden">
+                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+                                                    onclick="selectOption('Data 1')">
+                                                    Data 1
+                                                </li>
+                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+                                                    onclick="selectOption('Data 2')">
+                                                    Data 2
+                                                </li>
+                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+                                                    onclick="selectOption('Data 3')">
+                                                    Data 3
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <script>
+                                            function toggleDropdown() {
+                                                const menu = document.getElementById('dropdownMenu');
+                                                const icon = document.getElementById('basic-dropdown-icon');
+                                                icon.style.transform = menu.classList.contains('hidden') ? 'rotate(180deg)' : 'rotate(0deg)';
+                                                menu.classList.toggle('hidden');
+
+                                            }
+
+                                            function selectOption(option) {
+                                                const label = document.getElementById('dropdownLabel');
+                                                const input = document.getElementById('inp13');
+                                                input.value = option;
+                                                label.textContent = option;
+                                                toggleDropdown();
+                                            }
+                                        </script>
+
+                                        <!-- <input type="text" id="inp3" name="inp3" value="Swati"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                            name="inp4" id="inp4"> -->
                                     </div>
                                     </p>
                                 </div>
@@ -529,7 +642,9 @@
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-16 -->
-                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Father's Information
+                                        <textarea
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
+                                            name="inp7" id="inp7" rows="4">Father's Information
                                         </textarea>
                                     </div>
                                     </p>
@@ -546,7 +661,9 @@
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-17 -->
-                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Mother's Information
+                                        <textarea
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
+                                            name="inp7" id="inp7" rows="4">Mother's Information
                                         </textarea>
                                     </div>
                                     </p>
@@ -563,7 +680,9 @@
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-18 -->
-                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Brother's Information
+                                        <textarea
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
+                                            name="inp7" id="inp7" rows="4">Brother's Information
                                         </textarea>
                                     </div>
                                     </p>
@@ -580,7 +699,9 @@
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-19 -->
-                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Sisters's Information
+                                        <textarea
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
+                                            name="inp7" id="inp7" rows="4">Sisters's Information
                                         </textarea>
                                     </div>
                                     </p>
@@ -615,7 +736,9 @@
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
                                         <!-- INPUT-16 -->
-                                        <textarea class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"  name="inp7" id="inp7" rows="4">Address
+                                        <textarea
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
+                                            name="inp7" id="inp7" rows="4">Address
                                         </textarea>
                                     </div>
                                     </p>
