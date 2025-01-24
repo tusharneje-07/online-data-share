@@ -60,3 +60,75 @@ function toggleNavBar(){
         navtoggleicon.style.transform = 'rotate(180deg)';
     }
 }
+
+
+
+
+// ----------------------------------------------- IMAGE UPLOAD START
+document.addEventListener("DOMContentLoaded", () => {
+    const selectImageBtn = document.getElementById("selectImage");
+    const fileInput = document.getElementById("fileInput");
+    const cropModal = document.getElementById("cropModal");
+    const image = document.getElementById("image");
+    const cancelCropBtn = document.getElementById("cancelCrop");
+    const cropImageBtn = document.getElementById("cropImage");
+
+    let cropper;
+
+    // Open file select dialog
+    selectImageBtn.addEventListener("click", () => {
+        fileInput.click();
+
+    });
+
+    // Handle file selection
+    fileInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                image.src = reader.result;
+                cropModal.classList.remove("hidden");
+                cropper = new Cropper(image, {
+                    aspectRatio: 1, // 1x1 ratio
+                    viewMode: 2,
+                    autoCropArea: 1,
+                    scalable: true,
+                    zoomable: true,
+                    movable: true,
+                    rotatable: true,
+                });
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert("Please select a valid .png or .jpg image.");
+        }
+    });
+
+    // Cancel cropping
+    cancelCropBtn.addEventListener("click", () => {
+        cropper.destroy();
+        cropper = null;
+        cropModal.classList.add("hidden");
+    });
+
+    // Save cropped image
+    cropImageBtn.addEventListener("click", () => {
+        const canvas = cropper.getCroppedCanvas();
+        canvas.toBlob((blob) => {
+            // Replace the file input value with the cropped image
+            const croppedFile = new File([blob], "cropped-image.png", { type: "image/png" });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(croppedFile);
+            fileInput.files = dataTransfer.files;
+
+            // Close modal
+            cropper.destroy();
+            cropper = null;
+            cropModal.classList.add("hidden");
+
+            alert("Cropped image saved and ready for backend!");
+        });
+    });
+});
+// ----------------------------------------------- IMAGE UPLOAD END
