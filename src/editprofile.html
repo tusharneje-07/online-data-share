@@ -108,11 +108,27 @@
 
                     <!-- Profile -->
                     <div class="flex flex-col gap-5 items-center">
-                        <div
-                            class="mt-8 rounded-full overflow-hidden w-40 h-40 border-4 border-theme-dark dark:border-theme-light">
-                            <img src="./imgs/prf.jpg" alt="Profile Photo">
 
+                        <div class="relative">
+
+                            <!-- Image Upload Functionality -->
+                            <button id="selectImage">
+                                <div
+                                    class="absolute z-20 bottom-1 right-1 rounded-full p-3 dark:bg-theme-light bg-theme-dark cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960"
+                                        width="18px" class="dark:fill-dark-text fill-light-text">
+                                        <path
+                                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z" />
+                                    </svg>
+                                </div>
+                            </button>
+
+                            <div
+                                class="relative mt-8 rounded-full overflow-hidden w-40 h-40 border-4 border-theme-dark dark:border-theme-light">
+                                <img src="./imgs/prf.jpg" alt="Profile Photo">
+                            </div>
                         </div>
+
 
                         <!-- Name -->
                         <div class="flex flex-row">
@@ -467,7 +483,8 @@
                                             <button
                                                 class="w-full text-left px-4 py-2 bg-transparent rounded-md focus:outline-none"
                                                 onclick="toggleDropdown()">
-                                                <span id="dropdownLabel" class="text-sm basic-input-placeholder">Tula</span>
+                                                <span id="dropdownLabel"
+                                                    class="text-sm basic-input-placeholder">Tula</span>
                                                 <input type="text" id="inp13" name="inp13" hidden>
                                                 <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon"
                                                     class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
@@ -526,10 +543,8 @@
                             <p class="text-xs">Nakshatra</p>
                             <div class="flex">
 
-                                <div
-                                    class="relative w-full bg-odd-line-light dark:bg-odd-line-dark rounded-s-sm"
-                                    style="padding: 0.1rem;"
-                                    >
+                                <div class="relative w-full bg-odd-line-light dark:bg-odd-line-dark rounded-s-sm"
+                                    style="padding: 0.1rem;">
 
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-sm w-full">
@@ -541,7 +556,8 @@
                                             <button
                                                 class="w-full text-left px-4 py-2 bg-transparent rounded-md focus:outline-none"
                                                 onclick="toggleDropdown2()">
-                                                <span id="dropdownLabel2" class="text-sm basic-input-placeholder">Swati</span>
+                                                <span id="dropdownLabel2"
+                                                    class="text-sm basic-input-placeholder">Swati</span>
                                                 <input type="text" id="inp14" name="inp14" hidden>
                                                 <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon2"
                                                     class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
