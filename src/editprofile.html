@@ -141,15 +141,19 @@
 
                             <div class="dark:bg-odd-line-dark bg-theme-light rounded-md shadow-lg p-6 w-full max-w-lg">
                                 <!-- Crop Area -->
-                                 <div class="block w-full h-full text-end mb-3">
+                                <div class="block w-full h-full text-end mb-3">
                                     <button id="cancelCrop"
-                                    class="bg-container-light dark:text-dark-text text-black p-3 rounded-full">
-                                    
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" class="dark:fill-dark-text fill-black"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-                                    
-                                </button>
-                                 </div>
-                                
+                                        class="bg-container-light dark:text-dark-text text-black p-3 rounded-full">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                            width="20px" class="dark:fill-dark-text fill-black">
+                                            <path
+                                                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                                        </svg>
+
+                                    </button>
+                                </div>
+
                                 <div class="relative w-full h-64">
                                     <img id="image" src="" alt="Selected Image" class="max-h-64 object-contain">
                                 </div>
@@ -158,7 +162,7 @@
 
                                     <button id="cropImage"
                                         class="dark:bg-theme-light dark:text-dark-text bg-theme-dark text-light-text py-2 px-4 rounded-md">
-                                        Upload 
+                                        Upload
                                     </button>
                                 </div>
                             </div>
@@ -201,9 +205,9 @@
                                 <!-- INPUT-2 -->
                                 <p class="text-sm w-full">
 
-                                <div class="relative w-full">
+                                <div class="relative w-full" onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!')">
                                     <!-- Input Field -->
-                                    <input type="date" id="inp2" name="inp2" value="2005-07-15"
+                                    <input onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!',3)" type="date" id="inp2" name="inp2" value="2005-07-15"
                                         class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark"
                                         id="date-picker" />
                                 </div>
@@ -300,15 +304,13 @@
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Time of Birth</p>
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-sm">
+                            <div class="bg-odd-line-light dark:bg-odd-line-dark p-halfp rounded-sm" onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!')">
 
                                 <!-- INPUT-6 -->
-                                <p class="text-sm w-full">
-
-                                <div class="relative w-full">
+                                <div class="relative w-full" onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!')">
 
 
-                                    <input type="time" value="06:55"
+                                    <input onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!')" type="time" value="06:55"
                                         class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark"
                                         id="date-picker" />
                                 </div>
@@ -648,7 +650,7 @@
                             </div>
                         </div>
 
-                       
+
 
                     </div>
 
@@ -671,7 +673,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
 
                 </div>
@@ -837,6 +839,52 @@
     <br>
     <br>
 
+    <!-- Popup -->
+    <div id="popup"
+        class="hidden z-30 fixed top-10 left-1/2 transform -translate-x-1/2 dark:bg-theme-light bg-theme-dark rounded-md w-96">
+        <!-- Popup Content -->
+        <div class="flex justify-between items-center px-4 py-3">
+            <p id="popupMessage" class="text-light-text dark:text-dark-text font-medium"></p>
+            <button id="closeBtn" class="text-light-text dark:text-dark-text hover:text-red-500">
+                &times;
+            </button>
+        </div>
+        <!-- Animated Border -->
+        <div id="border-loader" class="h-1 rounded-md dark:bg-gray-400 bg-odd-line-dark animate-[grow_2s_linear]"></div>
+    </div>
+
+
+
+    <script>
+        const popup = document.getElementById("popup");
+        const popupMessage = document.getElementById("popupMessage");
+        const closeBtn = document.getElementById("closeBtn");
+        const borderloader = document.getElementById('border-loader');
+
+        let timeout;
+
+        // Function to show popup
+        function showPopup(message,seconds) {
+            popupMessage.textContent = message; // Set the message dynamically
+            popup.classList.remove("hidden");
+
+            // Close after 2 seconds
+            timeout = setTimeout(() => {
+                closePopup();
+            }, seconds*1000);
+        }
+
+        // Function to close popup
+        function closePopup() {
+            popup.classList.add("hidden");
+            clearTimeout(timeout);
+        }
+
+        // Event Listener for close button
+        closeBtn.addEventListener("click", closePopup);
+    </script>
+
+
     <!-- MOBILE NAV -->
     <div onclick="toggleNavBar()" id="toggleBtn"
         class="cursor-pointer rounded-md flex justify-center items-center fixed bottom-0 right-10 w-12 h-10 -translate-y-20 border bg-theme-light dark:bg-theme-dark border-theme-dark dark:border-theme-light">
@@ -845,6 +893,10 @@
             <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
         </svg>
     </div>
+
+
+
+
 
     <div id="navbar" class="block fixed bg-odd-line-light dark:bg-odd-line-dark bottom-0 w-full p-4">
         <div class="flex flex-row justify-around">

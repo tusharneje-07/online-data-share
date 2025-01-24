@@ -7,3 +7,12 @@
     --dark-text: #1c1c1c;
 }
 
+@keyframes grow {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}

@@ -43,7 +43,7 @@ toggleCheckbox.addEventListener('change', toggleTheme);
 
 
 
-function toggleNavBar(){
+function toggleNavBar() {
     const btn = document.getElementById('toggleBtn')
     const navbar = document.getElementById('navbar')
     const navtoggleicon = document.getElementById('navtoggleicon')
@@ -51,11 +51,11 @@ function toggleNavBar(){
     btn.classList.toggle('-translate-y-20')
     btn.classList.toggle('translate-y-2')
 
-    if(btn.classList.contains('-translate-y-20')){
+    if (btn.classList.contains('-translate-y-20')) {
         navbar.classList.remove('hidden')
         navtoggleicon.style.transform = 'rotate(0deg)';
     }
-    else{
+    else {
         navbar.classList.add('hidden')
         navtoggleicon.style.transform = 'rotate(180deg)';
     }
@@ -132,3 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 // ----------------------------------------------- IMAGE UPLOAD END
+
+
+// ----------------------------------------------- TOGGLE POPUP START
+
+// ----------------------------------------------- TOGGLE POPUP END
+
+
