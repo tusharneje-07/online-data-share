@@ -3,6 +3,10 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      width:{
+        'login-signup-box' : '22rem',
+      },
+
       borderRadius: {
         '10px': '10px', // Custom radius with 24px
         'custom-full': '50%',  // Fully rounded
