@@ -3,6 +3,10 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      borderRadius: {
+        '10px': '10px', // Custom radius with 24px
+        'custom-full': '50%',  // Fully rounded
+      },
 
       spacing: {
         'halfp': '0.6rem',
@@ -31,6 +35,8 @@ module.exports = {
 
         'toggle-btn-grad-on': '#121b2e',
         'toggle-btn-grad-off': '#bfbfbf',
+
+        'important-red' : '#ff6363',
       },
 
       fontFamily: {
