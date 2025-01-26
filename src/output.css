@@ -658,6 +658,10 @@ video {
   float: right;
 }
 
+.m-1 {
+  margin: 0.25rem;
+}
+
 .m-4 {
   margin: 1rem;
 }
@@ -1290,6 +1294,11 @@ video {
 .text-dark-text {
   --tw-text-opacity: 1;
   color: rgb(28 28 28 / var(--tw-text-opacity, 1));
+}
+
+.text-important-red {
+  --tw-text-opacity: 1;
+  color: rgb(255 99 99 / var(--tw-text-opacity, 1));
 }
 
 .text-light-text {
