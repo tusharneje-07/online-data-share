@@ -20,7 +20,7 @@
     <main class="m-4 md:m-8 z-0">
         <!-- Upper Title and HamMenue -->
         <div class="inline-flex w-full flex-row justify-between p-5">
-            <p style="font-size: 1.5rem;" class="font-bold">Edit Account Details</p>
+            <p style="font-size: 1.5rem;" class="font-bold">Account</p>
 
             <div class="mt-[0.5rem]">
                 <div class="group relative cursor-pointer z-10 w-1/4">
@@ -102,6 +102,113 @@
 
 
         <div class="mt-4 flex p-3 flex-col gap-10">
+
+            <!-- Share and Export -->
+            <div class="relative border border-theme-dark dark:border-theme-light box-border w-full rounded-3xl">
+                <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Share or Export
+                    Information
+                </p>
+
+                <div
+                    class="mb-5 flex flex-col md:flex-row w-full justify-center items-center text-center md:text-left md:justify-start">
+
+                    <div class="inline-flex justify-start gap-4 mt-5 w-full px-4 flex-wrap">
+
+                        <div class="flex flex-col text-start gap-1 w-full">
+                            <div class="flex gap-3 w-full">
+
+                                <Button
+                                    class="flex flex-row gap-2 bg-odd-line-light dark:bg-odd-line-dark rounded-10px h-full w-full ">
+                                    <div
+                                        class="flex items-center bg-theme-dark dark:bg-theme-light p-halfp rounded-s-10px h-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960"
+                                            width="22px" class="fill-light-text dark:fill-dark-text "><path d="M680-80q-50 0-85-35t-35-85q0-6 3-28L282-392q-16 15-37 23.5t-45 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q24 0 45 8.5t37 23.5l281-164q-2-7-2.5-13.5T560-760q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-24 0-45-8.5T598-672L317-508q2 7 2.5 13.5t.5 14.5q0 8-.5 14.5T317-452l281 164q16-15 37-23.5t45-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T720-200q0-17-11.5-28.5T680-240q-17 0-28.5 11.5T640-200q0 17 11.5 28.5T680-160ZM200-440q17 0 28.5-11.5T240-480q0-17-11.5-28.5T200-520q-17 0-28.5 11.5T160-480q0 17 11.5 28.5T200-440Zm480-280q17 0 28.5-11.5T720-760q0-17-11.5-28.5T680-800q-17 0-28.5 11.5T640-760q0 17 11.5 28.5T680-720Zm0 520ZM200-480Zm480-280Z"/>
+                                        </svg>
+                                    </div>
+
+                                    <span class="text-sm p-3">
+                                        Share Profile
+                                    </span>
+                                </Button>
+
+
+                                <Button
+                                    class="flex flex-row gap-2 bg-odd-line-light dark:bg-odd-line-dark rounded-10px h-full  w-full items-center">
+                                    <div
+                                        class="flex items-center bg-theme-dark dark:bg-theme-light p-halfp rounded-s-10px h-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960"
+                                            width="22px" class="fill-light-text dark:fill-dark-text ">
+                                            <path
+                                                d="M480-480ZM210.08-79.23 168.31-122l128-128H191.69v-60h206.39v206.38h-60v-103.61l-128 128ZM485.77-100v-60h221.92q5.39 0 8.85-3.46t3.46-8.85V-620H540v-180H252.31q-5.39 0-8.85 3.46t-3.46 8.85v390h-60v-390q0-29.92 21.19-51.12Q222.39-860 252.31-860H570l210 210v477.69q0 29.92-21.19 51.12Q737.61-100 707.69-100H485.77Z" />
+                                        </svg>
+                                    </div>
+
+                                    <span class="text-sm p-3">
+                                        Export in PDF
+                                    </span>
+                                </Button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Edit Information -->
+            <div class="relative border border-theme-dark dark:border-theme-light box-border w-full rounded-3xl">
+                <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Edit or Change Template
+                </p>
+
+                <div
+                    class="mb-5 flex flex-col md:flex-row w-full justify-center items-center text-center md:text-left md:justify-start">
+
+                    <div class="inline-flex justify-start gap-4 mt-5 w-full px-4 flex-wrap">
+
+                        <div class="flex flex-col text-start gap-1 w-full">
+                            <div class="flex gap-3 w-full">
+
+                                <Button
+                                    class="flex flex-row gap-2 bg-odd-line-light dark:bg-odd-line-dark rounded-10px h-full w-full ">
+                                    <div
+                                        class="flex items-center bg-theme-dark dark:bg-theme-light p-halfp rounded-s-10px h-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960"
+                                            width="22px" class="fill-light-text dark:fill-dark-text ">
+                                            
+                                            <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                                        </svg>
+                                    </div>
+
+                                    <span class="text-sm p-3">
+                                        Edit User Profile
+                                    </span>
+                                </Button>
+
+
+                                <Button
+                                    class="flex flex-row gap-2 bg-odd-line-light dark:bg-odd-line-dark rounded-10px h-full  w-full items-center">
+                                    <div
+                                        class="flex items-center bg-theme-dark dark:bg-theme-light p-halfp rounded-s-10px h-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960"
+                                            width="22px" class="fill-light-text dark:fill-dark-text ">
+                                            <path
+                                                d="M480-480ZM210.08-79.23 168.31-122l128-128H191.69v-60h206.39v206.38h-60v-103.61l-128 128ZM485.77-100v-60h221.92q5.39 0 8.85-3.46t3.46-8.85V-620H540v-180H252.31q-5.39 0-8.85 3.46t-3.46 8.85v390h-60v-390q0-29.92 21.19-51.12Q222.39-860 252.31-860H570l210 210v477.69q0 29.92-21.19 51.12Q737.61-100 707.69-100H485.77Z" />
+                                        </svg>
+                                    </div>
+
+                                    <span class="text-sm p-3">
+                                        Change Template
+                                    </span>
+                                </Button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
 
             <!-- GENERAL INFO -->
             <div class="relative border border-theme-dark dark:border-theme-light box-border w-full rounded-3xl">
@@ -431,7 +538,8 @@
                                         class="border-t border-container-dark dark:border-container-light flex gap-2.5 justify-start items-center">
 
                                         <!-- INPUT-21 -->
-                                        <input class="size-4 mt-2 rounded-lg p-4" type="checkbox" id="" name="" disabled>
+                                        <input class="size-4 mt-2 rounded-lg p-4" type="checkbox" id="" name=""
+                                            disabled>
                                         <p class="mt-2 text-sm">Link Sharing Is Not Enable.</p>
                                     </div>
 
@@ -460,7 +568,8 @@
                                         class="border-t border-container-dark dark:border-container-light flex gap-2.5 justify-start items-center">
 
                                         <!-- INPUT-22 -->
-                                        <input class="mt-2 size-4 rounded-lg p-4" type="checkbox" id="" name="" checked disabled>
+                                        <input class="mt-2 size-4 rounded-lg p-4" type="checkbox" id="" name="" checked
+                                            disabled>
                                         <p class="mt-2 text-sm">Global Search Is Enabled!</p>
                                     </div>
 
@@ -491,7 +600,7 @@
 
                     </div>
 
-        
+
 
                 </div>
 

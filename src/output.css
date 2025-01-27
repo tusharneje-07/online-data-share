@@ -856,6 +856,10 @@ video {
   width: max-content;
 }
 
+.w-2\/3 {
+  width: 66.666667%;
+}
+
 .max-w-lg {
   max-width: 32rem;
 }
