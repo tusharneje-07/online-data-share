@@ -107,8 +107,10 @@
     <div class="flex w-full justify-center">
 
 
-        <div class="mt-10 relative flex w-login-signup-box h-96 rounded-3xl border border-dark-text dark:border-light-text">
-            <p class="cursor-pointer absolute -top-4 left-12 bg-theme-dark dark:bg-theme-light text-light-text dark:text-dark-text px-3 py-1 rounded-lg">
+        <div
+            class="mt-10 relative flex w-login-signup-box h-auto rounded-3xl border border-dark-text dark:border-light-text">
+            <p
+                class="cursor-pointer absolute -top-4 left-12 bg-theme-dark dark:bg-theme-light text-light-text dark:text-dark-text px-3 py-1 rounded-lg">
                 Login
             </p>
             <p class="cursor-pointer absolute -top-4 right-12 bg-theme-light dark:bg-theme-dark px-3 rounded-lg">
@@ -162,9 +164,11 @@
 
                             <div class="dark:bg-theme-light bg-theme-dark rounded-e-10px flex items-center p-2">
                                 <svg id="toggleIcon" xmlns="http://www.w3.org/2000/svg" height="18px"
-                                    viewBox="0 -960 960 960" width="18px" class="dark:fill-dark-text fill-light-text cursor-pointer">
+                                    viewBox="0 -960 960 960" width="18px"
+                                    class="dark:fill-dark-text fill-light-text cursor-pointer">
 
-                                    <path d="M630.92-441.08 586-486q9-49.69-28.35-89.35Q520.31-615 466-606l-44.92-44.92q13.54-6.08 27.77-9.12 14.23-3.04 31.15-3.04 68.08 0 115.58 47.5T643.08-500q0 16.92-3.04 31.54-3.04 14.61-9.12 27.38Zm127.23 124.46L714-358q38-29 67.5-63.5T832-500q-50-101-143.5-160.5T480-720q-29 0-57 4t-55 12l-46.61-46.61q37.92-15.08 77.46-22.23Q438.39-780 480-780q140.61 0 253.61 77.54T898.46-500q-22.23 53.61-57.42 100.08-35.2 46.46-82.89 83.3Zm32.31 231.39L628.62-245.85q-30.77 11.39-68.2 18.62Q523-220 480-220q-141 0-253.61-77.54Q113.77-375.08 61.54-500q22.15-53 57.23-98.88 35.08-45.89 77.23-79.58l-110.77-112 42.16-42.15 705.22 705.22-42.15 42.16Zm-552.3-551.08q-31.7 25.23-61.66 60.66Q146.54-540.23 128-500q50 101 143.5 160.5T480-280q27.31 0 54.39-4.62 27.07-4.61 45.92-9.53L529.69-346q-10.23 4.15-23.69 6.61-13.46 2.47-26 2.47-68.08 0-115.58-47.5T316.92-500q0-12.15 2.47-25.42 2.46-13.27 6.61-24.27l-87.84-86.62ZM541-531Zm-131.77 65.77Z"/>
+                                    <path
+                                        d="M630.92-441.08 586-486q9-49.69-28.35-89.35Q520.31-615 466-606l-44.92-44.92q13.54-6.08 27.77-9.12 14.23-3.04 31.15-3.04 68.08 0 115.58 47.5T643.08-500q0 16.92-3.04 31.54-3.04 14.61-9.12 27.38Zm127.23 124.46L714-358q38-29 67.5-63.5T832-500q-50-101-143.5-160.5T480-720q-29 0-57 4t-55 12l-46.61-46.61q37.92-15.08 77.46-22.23Q438.39-780 480-780q140.61 0 253.61 77.54T898.46-500q-22.23 53.61-57.42 100.08-35.2 46.46-82.89 83.3Zm32.31 231.39L628.62-245.85q-30.77 11.39-68.2 18.62Q523-220 480-220q-141 0-253.61-77.54Q113.77-375.08 61.54-500q22.15-53 57.23-98.88 35.08-45.89 77.23-79.58l-110.77-112 42.16-42.15 705.22 705.22-42.15 42.16Zm-552.3-551.08q-31.7 25.23-61.66 60.66Q146.54-540.23 128-500q50 101 143.5 160.5T480-280q27.31 0 54.39-4.62 27.07-4.61 45.92-9.53L529.69-346q-10.23 4.15-23.69 6.61-13.46 2.47-26 2.47-68.08 0-115.58-47.5T316.92-500q0-12.15 2.47-25.42 2.46-13.27 6.61-24.27l-87.84-86.62ZM541-531Zm-131.77 65.77Z" />
 
                                 </svg>
                             </div>
@@ -188,27 +192,43 @@
                 </div>
 
                 <!-- Recommended -->
-                <div class="inline text-xs ml-5 px-2 py-1 rounded-md bg-green-500 w-min">
-                    <span>*Recommended</span>
+                <div class="flex w-full justify-center">
+
+                    <div class="inline text-xs px-2 py-1 rounded-md bg-green-500 w-min mt-2">
+                        <span>Recommended</span>
+                    </div>
                 </div>
                 <div class="w-full flex justify-center p-5 pt-2">
                     <button class="flex text-sm w-full bg-odd-line-light dark:bg-odd-line-dark rounded-10px">
 
-                        <div class="flex p-2 bg-theme-dark dark:bg-theme-light rounded-s-10px justify-center items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" class="" viewBox="0 0 50 50">
-                                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
-                                </svg>
+                        <div
+                            class="flex p-2 bg-theme-dark dark:bg-theme-light rounded-s-10px justify-center items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" class=""
+                                viewBox="0 0 50 50">
+                                <path fill="#FFC107"
+                                    d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z">
+                                </path>
+                                <path fill="#FF3D00"
+                                    d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z">
+                                </path>
+                                <path fill="#4CAF50"
+                                    d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z">
+                                </path>
+                                <path fill="#1976D2"
+                                    d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z">
+                                </path>
+                            </svg>
                         </div>
-                        
-                        
+
+
                         <div class="flex w-full h-full justify-center items-center">
                             Continue with Google
                         </div>
-                        
+
                     </button>
                 </div>
 
-                
+
 
             </div>
 
