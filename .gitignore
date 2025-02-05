@@ -1,3 +1,11 @@
 node_modules/
 
 DatabaseDesign.xlsx
+
+vendor/
+
+cred.json
+
+google_config.php
+
+.gitignore
