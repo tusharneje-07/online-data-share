@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Include the Google Client configuration
 include('google_config.php');
 
 // If the user is authenticated
