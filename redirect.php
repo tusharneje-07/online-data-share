@@ -17,7 +17,7 @@ if (isset($_GET['code'])) {
         $_SESSION['refresh_token'] = $token['refresh_token'];
     }
 
-    header('Location: profile.php');
+    header('Location: user/profile');
     exit();
 }
 ?>
