@@ -2,12 +2,9 @@
 session_start();
 require_once __DIR__ . '/../google_config.php';
 
-// Create login URL
-$login_url = $client->createAuthUrl();
-
 // Redirect to Google login if not authenticated
 if (!isset($_SESSION['access_token'])) {
-    header("Location: " . $login_url);
+    header("Location: " . 'login');
     exit();
 }
 

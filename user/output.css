@@ -841,6 +841,10 @@ video {
   height: 100%;
 }
 
+.h-9 {
+  height: 2.25rem;
+}
+
 .max-h-64 {
   max-height: 16rem;
 }
@@ -901,6 +905,14 @@ video {
 .w-min {
   width: -moz-min-content;
   width: min-content;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.w-9 {
+  width: 2.25rem;
 }
 
 .min-w-64 {

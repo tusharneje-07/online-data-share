@@ -1,6 +1,5 @@
 <?php
 ob_start();
-session_start();
 require_once __DIR__ . '/../google_config.php';
 
 ?>
@@ -261,7 +260,6 @@ require_once __DIR__ . '/../google_config.php';
 <?php
 if (isset($_POST['google-login'])) {
     if (!isset($_SESSION['access_token'])) {
-        echo "Getting True";
         $login_url = $client->createAuthUrl();
         header("Location: " . $login_url);
         exit();
@@ -270,5 +268,7 @@ if (isset($_POST['google-login'])) {
         exit();
     }
 }
+
+// Write function for manual username and password login
 
 ?>
