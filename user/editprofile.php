@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['userInfo'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$userInfo = $_SESSION['userInfo']; // This is now an associative array
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,8 +40,8 @@
         <div class="flex p-0 justify-start items-center text-center">
 
             <div class="pl-2 justify-start items-center text-center">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    class="p-0 fill-dark-text dark:fill-light-text">
+                <svg onclick="window.location.href='profile'"  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    class="cursor-pointer p-0 fill-dark-text dark:fill-light-text">
                     <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
                 </svg>
 
@@ -971,8 +983,9 @@
                                         </style>
 
                                         <!-- From Uiverse.io by catraco -->
-                                        <label class="container relative w-min flex justify-center items-center mt-2 dark:bg-theme-light bg-slate-400">
-                                            <input type="checkbox" >
+                                        <label
+                                            class="container relative w-min flex justify-center items-center mt-2 dark:bg-theme-light bg-slate-400">
+                                            <input type="checkbox">
                                             <div class="checkmark"></div>
                                             <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"
                                                 class="celebrate">
@@ -1014,8 +1027,9 @@
                                         class="border-t border-container-dark dark:border-container-light flex gap-2.5 justify-start items-center">
 
                                         <!-- INPUT-22 -->
-                                        <label class="container relative w-min flex justify-center items-center mt-2 dark:bg-theme-light bg-slate-400">
-                                            <input type="checkbox" >
+                                        <label
+                                            class="container relative w-min flex justify-center items-center mt-2 dark:bg-theme-light bg-slate-400">
+                                            <input type="checkbox">
                                             <div class="checkmark"></div>
                                             <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"
                                                 class="celebrate">
@@ -1282,9 +1296,17 @@
             <div class="inline-flex flex-col justify-center text-center items-center gap-2 cursor-pointer">
 
                 <div
-                    class="border p-2 dark:hover:shadow-dark-theme-shadow hover:shadow-light-theme-shadow dark:hover:border hover:border bg-container-light dark:bg-container-dark  border-dark-text dark:border-light-text h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out">
-                    <svg class="fill-dark-text dark:fill-light-text" xmlns="http://www.w3.org/2000/svg" height="20px"
-                        viewBox="0 -960 960 960" width="24px">
+                    class="overflow-hidden border dark:hover:shadow-dark-theme-shadow hover:shadow-light-theme-shadow dark:hover:border hover:border bg-container-light dark:bg-container-dark  border-dark-text dark:border-light-text h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out">
+                    <?php
+
+                    echo "<img src='" . $userInfo['picture'] . "' alt=''
+                        onerror='this.style.display='none'; document.getElementById('profile-svg').style.display='block'
+                        onload='this.style.display='block'; document.getElementById('profile-svg').style.display='none';'>"
+                        ?>
+
+
+                    <svg id="profile-svg" class="fill-dark-text dark:fill-light-text" xmlns="http://www.w3.org/2000/svg"
+                        height="20px" viewBox="0 -960 960 960" width="24px">
                         <path
                             d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
                     </svg>

@@ -21,6 +21,12 @@ try {
     // Now you can safely make API calls
     $oauth2 = new Google\Service\Oauth2($client);
     $userInfo = $oauth2->userinfo->get();
+    $_SESSION['userInfo'] = [
+        'name' => $userInfo->name,
+        'email' => $userInfo->email,
+        'picture' => $userInfo->picture
+    ];
+    
 } catch (Exception $e) {
 
 }
@@ -32,7 +38,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Mode Toggle</title>
+    <title>User Profile</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -69,7 +75,7 @@ try {
 
 
                         <div
-                            class="hidden flex-col bg-container-light dark:bg-container-dark h-auto w-max pt-4 rounded gap-2 peer-checked:flex">
+                            class="hidden flex-col bg-container-light dark:bg-container-dark h-auto w-max pt-4 rounded peer-checked:flex">
 
                             <svg class="ml-4 mb-2 block peer-checked:block dark:fill-light-text fill-dark-text"
                                 onclick="document.getElementById('ham-menu').checked = false"
@@ -118,6 +124,16 @@ try {
                                         </span>
                                     </div>
                                 </div>
+                            </div>
+
+
+                            <div
+                                class="rounded p-4 flex gap-2 flex-row justify-center items-start dark:bg-odd-line-dark bg-odd-line-light">
+                                
+                                <button class="flex bg-important-red">
+                                    
+                                </button>
+
                             </div>
 
                         </div>
@@ -200,7 +216,7 @@ try {
                         <div class="flex flex-col text-start gap-1 w-full">
                             <div class="flex gap-3 w-full">
 
-                                <Button
+                                <Button onclick="window.location.href = 'editprofile'"
                                     class="flex flex-row gap-2 bg-odd-line-light dark:bg-odd-line-dark rounded-10px h-full w-full ">
                                     <div
                                         class="flex items-center bg-theme-dark dark:bg-theme-light p-halfp rounded-s-10px h-full">
