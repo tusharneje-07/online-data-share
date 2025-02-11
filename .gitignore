@@ -11,3 +11,5 @@ cred.json
 google_config.php
 
 .env
+
+user/.env

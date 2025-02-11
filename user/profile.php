@@ -1,9 +1,10 @@
 <?php
 session_start();
 require_once __DIR__ . '/../google_config.php';
+require_once './db.php';
 
 // Redirect to login if access token is missing
-if (!isset($_SESSION['access_token'])) {
+if (!isset($_SESSION['access_token']) || !isset($_COOKIE['user_access'])) {
     header("Location: login");
     exit();
 }
@@ -21,6 +22,19 @@ try {
     // Now you can safely make API calls
     $oauth2 = new Google\Service\Oauth2($client);
     $userInfo = $oauth2->userinfo->get();
+    
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_accounts WHERE username = ?");
+    $stmt->execute([$userInfo->email]);
+
+    while ($row = $stmt->fetch()) {
+        if($row['COUNT(*)'] <= 0){
+            $hased = hash('sha256',$userInfo->email);
+            $password = hash('sha256',"$userInfo->email|$userInfo->name|PASSWORD");
+            $stmt = $pdo->prepare("INSERT INTO `user_accounts`(`uid`, `username`, `password`, `acc_type`, `mobile_number`) VALUES (?,?,?,?,?)");
+            $stmt->execute([$hased,$userInfo->email,$password,'GACC','12345']);
+        }
+    }
+    
     $_SESSION['userInfo'] = [
         'name' => $userInfo->name,
         'email' => $userInfo->email,
@@ -28,7 +42,7 @@ try {
     ];
     
 } catch (Exception $e) {
-
+    echo "NORMAL USER LOGIN";
 }
 ?>
 

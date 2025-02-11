@@ -1,7 +1,7 @@
 <?php
 ob_start();
 require_once __DIR__ . '/../google_config.php';
-
+require_once './db.php';
 ?>
 
 <!DOCTYPE html>
@@ -127,24 +127,26 @@ require_once __DIR__ . '/../google_config.php';
             <div class="flex w-full flex-col">
 
                 <div class="flex w-full p-5 pb-0">
-                    <!-- Field -->
-                    <div class="w-full flex flex-col mt-5">
-                        <label class="text-xs ml-1 mb-1">
-                            Username
-                        </label>
-                        <div class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-4 rounded-10px">
+                    <form action="login.php" method="post" class="w-full flex flex-col">
+                        <!-- Field -->
+                        <div class="w-full flex flex-col mt-5">
+                            <label class="text-xs ml-1 mb-1">
+                                Username
+                            </label>
+                            <div class="relative w-full bg-odd-line-light dark:bg-odd-line-dark p-4 rounded-10px">
 
-                            <p class="text-sm w-full">
-                            <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
-                                <!-- INPUT-10 -->
-                                <input type="text" id="inp3" name="inp3" value="" placeholder="Enter Your Username Here"
-                                    class="appearance-none text-sm p-0 bg-transparent outline-none w-full" name="inp4"
-                                    id="inp4">
+                                <p class="text-sm w-full">
+                                <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
+                                    <!-- INPUT-10 -->
+                                    <input type="text" value=""
+                                        placeholder="Enter Your Username Here"
+                                        class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
+                                        name="username" id="username">
+                                </div>
+                                </p>
                             </div>
-                            </p>
-                        </div>
 
-                    </div>
+                        </div>
                 </div>
 
                 <div class="flex w-full p-5 pt-3">
@@ -164,7 +166,7 @@ require_once __DIR__ . '/../google_config.php';
                                     <!-- INPUT-10 -->
                                     <input type="password" value="" placeholder="Enter Your Password Here"
                                         class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                        name="inp4" id="passwordField">
+                                        name="password" id="password">
                                 </div>
                                 </p>
                             </div>
@@ -185,10 +187,13 @@ require_once __DIR__ . '/../google_config.php';
                 </div>
 
                 <div class="flex w-full p-5 pt-0">
-                    <button class="text-sm relative w-full bg-odd-line-light dark:bg-odd-line-dark p-2 rounded-10px">
+
+                    <button name="user-login"
+                        class="text-sm relative w-full bg-odd-line-light dark:bg-odd-line-dark p-2 rounded-10px">
                         Login
                     </button>
                 </div>
+                </form>
 
                 <div class="flex justify-normal items-center w-full px-5">
                     <hr class="border-theme-dark dark:border-theme-light w-1/2 opacity-30">
@@ -252,6 +257,11 @@ require_once __DIR__ . '/../google_config.php';
 
     <script src="./theme-toggle.js"></script>
     <script src="./loginjs.js"></script>
+    <script>
+        function error_login(msg, status) {
+            alert(msg);
+        }
+    </script>
 </body>
 
 </html>
@@ -266,6 +276,43 @@ if (isset($_POST['google-login'])) {
     } else {
         header("Location: profile.php");
         exit();
+    }
+}
+if (isset($_POST["user-login"])) {
+    if (isset($_COOKIE["user_access"])) {
+
+    } else {
+        echo var_dump($_POST);
+        $user_username = $_POST["username"];
+        $user_password = $_POST["password"];
+
+        // Manual Login
+        $stmt = $pdo->prepare("SELECT COUNT(*),password,uid FROM user_accounts WHERE username = ?");
+        $stmt->execute([$user_username]);
+
+        while ($row = $stmt->fetch()) {
+            if ($row['COUNT(*)'] <= 0) {
+                echo '<h1>' . $user_username;
+                $user_password;
+                $row["COUNT(*)"];
+                var_dump($row) . '</h1>';
+                echo '
+                <script>
+                    error_login("Login Failed! Account not found!",1);
+                </script>
+                ';
+            } else {
+                if ($row['password'] == hash('sha256', $user_password)) {
+                    setcookie("user_access", base64_encode($row['uid']), time() + 3600 * 5, "/", "", true, true);
+                    header("Location: profile.php");
+                }
+                echo '
+                <script>
+                    error_login("Login Failed! Check Password",0);
+                </script>
+                ';
+            }
+        }
     }
 }
 

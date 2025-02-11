@@ -12,7 +12,7 @@ if ($client->revokeToken()) {
 }
 
 session_unset();
-session_destroy();
+session_destroy();  
 
 header('Location: /OnlineBioDataSharingProject/');
 exit();
