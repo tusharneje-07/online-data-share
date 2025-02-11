@@ -22,7 +22,7 @@ require_once './db.php';
 </head>
 
 <body
-    class="bg-theme-light text-dark-text dark:bg-theme-dark dark:text-light-text transition-colors duration-300 font-Ubuntu">
+    class="bg-theme-light text-dark-text dark:bg-theme-dark dark:text-light-text transition-colors duration-300 font-Ubuntu h-[100vh]">
 
     <div class="m-4 md:m-8 z-0">
         <div class="inline-flex w-full flex-row justify-between p-5">
@@ -243,16 +243,27 @@ require_once './db.php';
                         </button>
                     </form>
                 </div>
-
-
-
-
             </div>
 
 
         </div>
     </div>
 
+    <div id="auto-login" class="hidden absolute flex flex-col bg-important-red right-0 p-3 bottom-10 gap-4 items-center text-white rounded-s justify-start text-left">
+    
+    <span class="w-full ml-2">
+        Logged In Previously?
+    </span>
+        <form class="flex flex-row gap-2 items-center" action="login.php" method="post">
+            <Button name="auto-login" class="p-2 bg-white rounded text-black text-left">
+                Auto Login
+            </Button>
+            or 
+            <Button name="auto-login-remove" class="p-2 bg-white rounded text-black">
+                Remove Auto Login
+            </Button> 
+        </form>
+    </div>
 
 
     <script src="./theme-toggle.js"></script>
@@ -261,6 +272,10 @@ require_once './db.php';
         function error_login(msg, status) {
             alert(msg);
         }
+
+        function toggleAutoLogin(){
+            document.getElementById('auto-login').classList.toggle('hidden');
+        }
     </script>
 </body>
 
@@ -268,6 +283,25 @@ require_once './db.php';
 
 
 <?php
+if(isset($_POST['auto-login'])){
+    if (isset($_COOKIE["user_access"])) {
+        header("Location: profile.php");
+        exit();
+    }
+}
+if(isset($_POST['auto-login-remove'])){
+    if (isset($_COOKIE["user_access"])) {
+        setcookie("user_access", base64_encode(""), time() + 0, "/", "", true, true);
+        header("Location: login");
+    }
+}
+if (isset($_COOKIE["user_access"])) {
+
+    echo "<script>
+    toggleAutoLogin();
+    </script>";
+
+}
 if (isset($_POST['google-login'])) {
     if (!isset($_SESSION['access_token'])) {
         $login_url = $client->createAuthUrl();
@@ -280,7 +314,8 @@ if (isset($_POST['google-login'])) {
 }
 if (isset($_POST["user-login"])) {
     if (isset($_COOKIE["user_access"])) {
-
+        // echo base64_decode(($_COOKIE["user_access"]));
+        header("Location: profile.php");
     } else {
         echo var_dump($_POST);
         $user_username = $_POST["username"];
@@ -302,9 +337,11 @@ if (isset($_POST["user-login"])) {
                 </script>
                 ';
             } else {
+                echo $row['password'] . ' ' . hash('sha256', $user_password);
                 if ($row['password'] == hash('sha256', $user_password)) {
-                    setcookie("user_access", base64_encode($row['uid']), time() + 3600 * 5, "/", "", true, true);
+                    setcookie("user_access", base64_encode($row['uid']), time() + 20, "/", "", true, true);
                     header("Location: profile.php");
+                    // echo base64_decode(($_COOKIE["user_access"]));
                 }
                 echo '
                 <script>

@@ -4,45 +4,57 @@ require_once __DIR__ . '/../google_config.php';
 require_once './db.php';
 
 // Redirect to login if access token is missing
-if (!isset($_SESSION['access_token']) || !isset($_COOKIE['user_access'])) {
+if (isset($_SESSION['access_token'])) {
+    try {
+        // Set the access token to the client
+        $client->setAccessToken($_SESSION['access_token']);
+
+        // **Check if the token is expired**
+        if ($client->isAccessTokenExpired()) {
+            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            $_SESSION['access_token'] = $client->getAccessToken(); // Update session with new token
+        }
+
+        // Now you can safely make API calls
+        $oauth2 = new Google\Service\Oauth2($client);
+        $userInfo = $oauth2->userinfo->get();
+
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_accounts WHERE username = ?");
+        $stmt->execute([$userInfo->email]);
+
+        while ($row = $stmt->fetch()) {
+            if ($row['COUNT(*)'] <= 0) {
+                $hased = hash('sha256', $userInfo->email);
+                $password = hash('sha256', "$userInfo->email|$userInfo->name|PASSWORD");
+                $stmt = $pdo->prepare("INSERT INTO `user_accounts`(`uid`, `username`, `password`, `acc_type`, `mobile_number`) VALUES (?,?,?,?,?)");
+                $stmt->execute([$hased, $userInfo->email, $password, 'GACC', '12345']);
+            }
+        }
+
+        $_SESSION['userInfo'] = [
+            'name' => $userInfo->name,
+            'email' => $userInfo->email,
+            'picture' => $userInfo->picture
+        ];
+
+    } catch (Exception $e) {
+        $_SESSION['userInfo'] = [
+            'name' => "User Name",
+            'email' => "User Name",
+            'picture' => ""
+        ];
+        $userInfo = $_SESSION['userInfo'];
+    }
+} else if (isset($_COOKIE['user_access'])) {
+    $_SESSION['userInfo'] = [
+        'name' => "User Name",
+        'email' => "User Name",
+        'picture' => ""
+    ];
+    $userInfo = $_SESSION['userInfo'];
+} else {
     header("Location: login");
     exit();
-}
-
-try {
-    // Set the access token to the client
-    $client->setAccessToken($_SESSION['access_token']);
-
-    // **Check if the token is expired**
-    if ($client->isAccessTokenExpired()) {
-        $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-        $_SESSION['access_token'] = $client->getAccessToken(); // Update session with new token
-    }
-
-    // Now you can safely make API calls
-    $oauth2 = new Google\Service\Oauth2($client);
-    $userInfo = $oauth2->userinfo->get();
-    
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_accounts WHERE username = ?");
-    $stmt->execute([$userInfo->email]);
-
-    while ($row = $stmt->fetch()) {
-        if($row['COUNT(*)'] <= 0){
-            $hased = hash('sha256',$userInfo->email);
-            $password = hash('sha256',"$userInfo->email|$userInfo->name|PASSWORD");
-            $stmt = $pdo->prepare("INSERT INTO `user_accounts`(`uid`, `username`, `password`, `acc_type`, `mobile_number`) VALUES (?,?,?,?,?)");
-            $stmt->execute([$hased,$userInfo->email,$password,'GACC','12345']);
-        }
-    }
-    
-    $_SESSION['userInfo'] = [
-        'name' => $userInfo->name,
-        'email' => $userInfo->email,
-        'picture' => $userInfo->picture
-    ];
-    
-} catch (Exception $e) {
-    echo "NORMAL USER LOGIN";
 }
 ?>
 
@@ -142,11 +154,19 @@ try {
 
 
                             <div
-                                class="rounded p-4 flex gap-2 flex-row justify-center items-start dark:bg-odd-line-dark bg-odd-line-light">
-                                
-                                <button class="flex bg-important-red">
-                                    
-                                </button>
+                                class="rounded flex gap-2 flex-row justify-center items-start dark:bg-odd-line-dark bg-odd-line-light">
+                                <form class="w-full" action="../deleteacc.php">
+
+                                    <button
+                                        class="flex bg-important-red px-3 w-full py-2 items-center gap-1 rounded-md text-white cursor-pointer hover:bg-red-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="h-5"
+                                            fill="#fff">
+                                            <path
+                                                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                                        </svg>
+                                        Logout
+                                    </button>
+                                </form>
 
                             </div>
 
@@ -710,12 +730,12 @@ try {
 
                 <div
                     class="overflow-hidden border dark:hover:shadow-dark-theme-shadow hover:shadow-light-theme-shadow dark:hover:border hover:border bg-container-light dark:bg-container-dark  border-dark-text dark:border-light-text h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out">
-                    <?php 
-                    
-                    echo "<img src='" . $userInfo->picture . "' alt=''
+                    <?php
+
+                    echo "<img src='" . $_SESSION['userInfo']['picture'] . "' alt=''
                         onerror='this.style.display='none'; document.getElementById('profile-svg').style.display='block'
-                        onload='this.style.display='block'; document.getElementById('profile-svg').style.display='none';'>" 
-                    ?>
+                        onload='this.style.display='block'; document.getElementById('profile-svg').style.display='none';'>"
+                        ?>
 
 
                     <svg id="profile-svg" class="fill-dark-text dark:fill-light-text" xmlns="http://www.w3.org/2000/svg"
