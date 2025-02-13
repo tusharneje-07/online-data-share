@@ -475,9 +475,9 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-10 -->
-                                        <input type="text" id="inp3" name="inp3" value="Hindu"
+                                        <?php echo '<input type="text" value="'. $row['religion'] .'"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                            name="inp10" id="inp10">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -495,9 +495,9 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-11 -->
-                                        <input type="text" id="inp3" name="inp3" value="Koshti"
+                                        <?php echo '<input type="text" value="'. $row['caste'] .'"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                            name="inp11" id="inp11">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -514,9 +514,10 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-12 -->
-                                        <input type="text" id="inp3" name="inp3" value="Hatagar Koshti"
+                                        
+                                        <?php echo '<input type="text" value="'. $row['subcast'] .'"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                            name="inp12" id="inp12">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -555,8 +556,8 @@ $row = $stmt->fetch();
                                             <button
                                                 class="w-full text-left px-4 py-2 bg-transparent rounded-10px focus:outline-none"
                                                 onclick="toggleDropdown()">
-                                                <span id="dropdownLabel"
-                                                    class="text-sm basic-input-placeholder">Tula</span>
+                                                <span id="dropdownLabel" name="inp13" id="inp13"
+                                                    class="text-sm basic-input-placeholder"><?php echo $row['rashi'] ?></span>
                                                 <input type="text" id="inp13" name="inp13" hidden>
                                                 <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon"
                                                     class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
@@ -628,8 +629,8 @@ $row = $stmt->fetch();
                                             <button
                                                 class="w-full text-left px-4 py-2 bg-transparent rounded-10px focus:outline-none"
                                                 onclick="toggleDropdown2()">
-                                                <span id="dropdownLabel2"
-                                                    class="text-sm basic-input-placeholder">Swati</span>
+                                                <span id="dropdownLabel2" name="inp13" id="inp13"
+                                                    class="text-sm basic-input-placeholder"><?php echo $row['nakshatra'] ?></span>
                                                 <input type="text" id="inp14" name="inp14" hidden>
                                                 <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon2"
                                                     class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
@@ -699,9 +700,11 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-15 -->
-                                        <input type="text" id="inp3" name="inp3" value="IDK"
+                                        <!-- birthname -->
+
+                                        <?php echo '<input type="text" value="'. $row['birthname'] .'"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                            name="inp15" id="inp15">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -733,10 +736,10 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-16 -->
-                                        <textarea
+                                        <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp7" id="inp7" rows="4">Father's Information
-                                        </textarea>
+                                            name="inp16" id="inp16" rows="4">' . htmlspecialchars($row['father']) . ' 
+                                        </textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -752,10 +755,10 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-17 -->
-                                        <textarea
+                                        <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp7" id="inp7" rows="4">Mother's Information
-                                        </textarea>
+                                            name="inp17" id="inp17" rows="4">' . htmlspecialchars($row['mother']) . ' 
+                                        </textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -771,10 +774,10 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-18 -->
-                                        <textarea
+                                        <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp7" id="inp7" rows="4">Brother's Information
-                                        </textarea>
+                                            name="inp18" id="inp18" rows="4">' . htmlspecialchars($row['brother']) . ' 
+                                        </textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -790,10 +793,10 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-19 -->
-                                        <textarea
+                                        <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp7" id="inp7" rows="4">Sisters's Information
-                                        </textarea>
+                                            name="inp19" id="inp19" rows="4">' . htmlspecialchars($row['father']) . ' 
+                                        </textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
