@@ -346,10 +346,6 @@ $row = $stmt->fetch();
                                 <div class="relative w-full"
                                     onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!')">
 
-
-
-                                   
-
                                         <?php echo '<input onfocus="showPopup(\'In Dark Mode Some Icons Might Not Be Seen Properly!\')" type="time" id="inp6" name="inp6" value="' . date('H:i', strtotime($row['timeofbirth'])) . '" class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark" id="time-picker" />'; ?>
 
                                 </div>
@@ -384,10 +380,10 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-7 -->
-                                        <textarea
+                                        <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp7" id="inp7" rows="4">Job Description
-                                        </textarea>
+                                            name="inp7" id="inp7" rows="4">'. $row['work'] .'
+                                        </textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -404,9 +400,9 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-8 -->
-                                        <input type="number" id="inp3" name="inp3" value="5.5"
-                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                        
+                                        <?php echo '<input type="number" id="inp8" name="inp8" value="' . $row['income'] . '"
+                                            class="appearance-none text-sm p-0 bg-transparent outline-none w-full">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -442,10 +438,10 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-9 -->
-                                        <textarea
+                                        <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp7" id="inp7" rows="4">Education Details
-                                        </textarea>
+                                            name="inp9" id="inp9" rows="4">' . $row['education'] . '
+                                        </textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
