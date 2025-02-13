@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once './db.php';
 
 if (!isset($_SESSION['userInfo'])) {
     header("Location: login.php");
@@ -7,7 +8,9 @@ if (!isset($_SESSION['userInfo'])) {
 }
 
 $userInfo = $_SESSION['userInfo']; // This is now an associative array
-
+$stmt = $pdo->prepare("SELECT * FROM user_information WHERE uid = ?");
+$stmt->execute([$userInfo['uid']]);
+$row = $stmt->fetch();   
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +19,7 @@ $userInfo = $_SESSION['userInfo']; // This is now an associative array
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Mode Toggle</title>
+    <title>Edit User Profile</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -40,7 +43,8 @@ $userInfo = $_SESSION['userInfo']; // This is now an associative array
         <div class="flex p-0 justify-start items-center text-center">
 
             <div class="pl-2 justify-start items-center text-center">
-                <svg onclick="window.location.href='profile'"  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                <svg onclick="window.location.href='profile'" xmlns="http://www.w3.org/2000/svg" height="24px"
+                    viewBox="0 -960 960 960" width="24px"
                     class="cursor-pointer p-0 fill-dark-text dark:fill-light-text">
                     <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
                 </svg>
@@ -216,8 +220,10 @@ $userInfo = $_SESSION['userInfo']; // This is now an associative array
 
                                 <div class="relative w-full">
                                     <!-- INPUT-1 -->
-                                    <input class="bg-transparent outline-none" type="text" id="inp1" name="inp1"
-                                        value="Tushar Sadashiv Neje">
+                                     <?php 
+                                     echo '<input class="bg-transparent outline-none" type="text" id="inp1" name="inp1" value="' . $row['fullname'] . '">'; ?>
+    
+                                    
                                 </div>
                                 </p>
                             </div>
@@ -237,10 +243,9 @@ $userInfo = $_SESSION['userInfo']; // This is now an associative array
                                 <div class="relative w-full"
                                     onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!')">
                                     <!-- Input Field -->
-                                    <input onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!',3)"
-                                        type="date" id="inp2" name="inp2" value="2005-07-15"
-                                        class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark"
-                                        id="date-picker" />
+                                    <?php echo '<input onfocus="showPopup(\'In Dark Mode Some Icons Might Not Seen Properly!\', 3)" type="date" id="inp2" name="inp2" value="' . date('Y-m-d', strtotime($row['dob'])) . '" class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark" id="date-picker" />'; ?>
+
+
                                 </div>
                                 </p>
 
@@ -259,9 +264,9 @@ $userInfo = $_SESSION['userInfo']; // This is now an associative array
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-3 -->
-                                        <input type="number" id="inp3" name="inp3" value="5.5"
+                                        <?php echo '<input type="number" id="inp3" name="inp3" value="' . $row['height'] .'"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp3" id="inp3">
+                                            name="inp3" id="inp3">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -284,9 +289,9 @@ $userInfo = $_SESSION['userInfo']; // This is now an associative array
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-4 -->
-                                        <input type="number" id="inp3" name="inp3" value="5.5"
+                                        <?php echo '<input type="number" value="' . $row['weight'] .'"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                            name="inp4" id="inp4">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -322,10 +327,9 @@ $userInfo = $_SESSION['userInfo']; // This is now an associative array
 
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark w-full">
-                                        <!-- INPUT-5 -->
-                                        <input type="text" id="inp3" name="inp3" value="Ichalkaranji"
+                                            <?php echo '<input type="text" value="' . $row['location'] .'"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                            name="inp5" id="inp5">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -343,10 +347,11 @@ $userInfo = $_SESSION['userInfo']; // This is now an associative array
                                     onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!')">
 
 
-                                    <input onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!')"
-                                        type="time" value="06:55"
-                                        class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark"
-                                        id="date-picker" />
+
+                                   
+
+                                        <?php echo '<input onfocus="showPopup(\'In Dark Mode Some Icons Might Not Be Seen Properly!\')" type="time" id="inp6" name="inp6" value="' . date('H:i', strtotime($row['timeofbirth'])) . '" class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark" id="time-picker" />'; ?>
+
                                 </div>
                                 </p>
 

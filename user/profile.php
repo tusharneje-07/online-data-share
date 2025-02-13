@@ -22,23 +22,76 @@ if (isset($_SESSION['access_token'])) {
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_accounts WHERE username = ?");
         $stmt->execute([$userInfo->email]);
 
+        // IF NEW USER 
         while ($row = $stmt->fetch()) {
             if ($row['COUNT(*)'] <= 0) {
                 $hased = hash('sha256', $userInfo->email);
                 $password = hash('sha256', "$userInfo->email|$userInfo->name|PASSWORD");
                 $stmt = $pdo->prepare("INSERT INTO `user_accounts`(`uid`, `username`, `password`, `acc_type`, `mobile_number`) VALUES (?,?,?,?,?)");
                 $stmt->execute([$hased, $userInfo->email, $password, 'GACC', '12345']);
+
+                // Setting User in user_info table
+                $stmt = $pdo->prepare("INSERT INTO `user_information`(`uid`, `owner`, `fullname`, `dob`, `height`, `weight`, `location`, `timeofbirth`, `work`, `income`, `education`, `religion`, `caste`, `subcast`, `rashi`, `nakshatra`, `birthname`, `father`, `mother`, `brother`, `sister`, `address`, `contactno`, `linkshare`, `globalsearch`, `maritalstatus`, `template`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $stmt->execute([
+                    $hased,
+                    $userInfo->email,
+                    'NA', // Full Name
+                    'NA', // Date of Birth
+                    0.0, // Height
+                    0.0, // Weight
+                    'NA', // Location
+                    'NA', // Time of Birth
+                    'NA', // Time of Birth
+                    'NA', // Income
+                    'NA', // Education
+                    'NA', // Religion
+                    'NA', // Caste
+                    'NA', // Sub-cast
+                    'NA', // Rashi
+                    'NA', // Nakshatra
+                    'NA', // Birth Name
+                    'NA', // Father's Information
+                    'NA', // Mother's Information
+                    'NA', // Brother's Information
+                    'NA', // Sister's Information
+                    'NA', // Address Information
+                    'NA', // Contact Information
+                    0, // Link Share
+                    0, // Global Search
+                    'UNMARRIED', // Marital Status
+                    'TEMP0', // Template
+                ]);
+
+
+                $_SESSION['userInfo'] = [
+                    'uid' => $hased,
+                    'auth' => true,
+                    'name' => $userInfo->name,
+                    'email' => $userInfo->email,
+                    'picture' => $userInfo->picture
+                ];
+                header('Location: editprofile');
+
             }
         }
 
+        $stmt = $pdo->prepare("SELECT `uid` FROM user_accounts WHERE username = ?");
+        $stmt->execute([$userInfo->email]);
+        $row = $stmt->fetch();
+
         $_SESSION['userInfo'] = [
+            'uid' => $row['uid'],
+            'auth' => true,
             'name' => $userInfo->name,
             'email' => $userInfo->email,
             'picture' => $userInfo->picture
         ];
 
     } catch (Exception $e) {
+        // Redirect to Error Page.
+        echo $e;
         $_SESSION['userInfo'] = [
+            'auth' => true,
             'name' => "User Name",
             'email' => "User Name",
             'picture' => ""
@@ -47,6 +100,8 @@ if (isset($_SESSION['access_token'])) {
     }
 } else if (isset($_COOKIE['user_access'])) {
     $_SESSION['userInfo'] = [
+        'uid' => base64_decode($_COOKIE['user_access']),
+        'auth' => true,
         'name' => "User Name",
         'email' => "User Name",
         'picture' => ""

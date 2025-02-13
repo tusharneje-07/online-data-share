@@ -263,6 +263,9 @@ require_once './db.php';
                 Remove Auto Login
             </Button> 
         </form>
+        <span style="font-size: 0.65rem;" class="text-left">
+            *Auto Login get's Removed After 2 Hours Automatically.
+        </span>
     </div>
 
 
@@ -339,7 +342,7 @@ if (isset($_POST["user-login"])) {
             } else {
                 echo $row['password'] . ' ' . hash('sha256', $user_password);
                 if ($row['password'] == hash('sha256', $user_password)) {
-                    setcookie("user_access", base64_encode($row['uid']), time() + 20, "/", "", true, true);
+                    setcookie("user_access", base64_encode($row['uid']), time() + 3600 * 2, "/", "", true, true);
                     header("Location: profile.php");
                     // echo base64_decode(($_COOKIE["user_access"]));
                 }
