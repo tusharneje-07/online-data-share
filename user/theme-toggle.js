@@ -73,7 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const cancelCropBtn = document.getElementById("cancelCrop");
     const cropImageBtn = document.getElementById("cropImage");
     const uid_of_user = document.getElementById("uid_prf").value;
-
+    
+    const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
     let cropper;
 
     // Open file select dialog
@@ -84,6 +85,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle file selection
     fileInput.addEventListener("change", (event) => {
         const file = event.target.files[0];
+
+        // Check file size (must be ≤ 2MB)
+        if (file.size > MAX_FILE_SIZE) {
+            alert("File size exceeds 2MB! Please select a smaller image.");
+            fileInput.value = ""; // Reset file input
+            return;
+        }
+
         if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
             const reader = new FileReader();
             reader.onload = () => {
@@ -102,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
             reader.readAsDataURL(file);
         } else {
             alert("Please select a valid .png or .jpg image.");
+            fileInput.value = ""; // Reset file input
         }
     });
 
@@ -120,9 +130,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const canvas = cropper.getCroppedCanvas();
         canvas.toBlob((blob) => {
+            if (blob.size > MAX_FILE_SIZE) {
+                alert("Cropped image exceeds 2MB! Please adjust the crop and try again.");
+                return;
+            }
+
             const formData = new FormData();
             formData.append("cropped_image", blob, "cropped-image.png");
             formData.append("uid", uid_of_user);
+
             // Send to backend
             fetch("upload.php", {
                 method: "POST",
@@ -130,15 +146,16 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(response => response.text())
             .then(data => {
-                alert(data); // Show success message
                 cropper.destroy();
                 cropper = null;
                 cropModal.classList.add("hidden");
+                window.location.reload(true);
             })
             .catch(error => console.error("Error uploading image:", error));
         }, "image/png");
     });
 });
+
 
 // ----------------------------------------------- IMAGE UPLOAD END
 

@@ -13,7 +13,8 @@ if (isset($_FILES["cropped_image"]) && $_FILES["cropped_image"]["error"] == 0) {
 
     // Move uploaded file to the destination folder
     if (move_uploaded_file($_FILES["cropped_image"]["tmp_name"], $filePath)) {
-        echo "Image successfully uploaded: " . $filePath;
+        // header("Location: editprofile");
+        // exit();
     } else {
         echo "Error moving file!";
     }

@@ -196,7 +196,7 @@ if(!$row){
                                     <img id="image" src="" alt="Selected Image" class="max-h-64 object-contain">
                                 </div>
                                 <!-- Buttons -->
-                                <div class="mt-4 flex justify-end space-x-4">
+                                <div class="mt-4 flex flex-col gap-2 justify-end space-x-4">
 
                                     <button id="cropImage"
                                         class="dark:bg-theme-light dark:text-dark-text bg-theme-dark text-light-text py-2 px-4 rounded-md">
