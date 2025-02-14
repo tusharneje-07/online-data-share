@@ -10,7 +10,10 @@ if (!isset($_SESSION['userInfo'])) {
 $userInfo = $_SESSION['userInfo']; // This is now an associative array
 $stmt = $pdo->prepare("SELECT * FROM user_information WHERE uid = ?");
 $stmt->execute([$userInfo['uid']]);
-$row = $stmt->fetch();   
+$row = $stmt->fetch();
+if(!$row){
+    echo "Error While Featching Query" . var_dump($stmt->errorInfo()) . var_dump($row);
+}  
 ?>
 
 <!DOCTYPE html>
@@ -160,10 +163,12 @@ $row = $stmt->fetch();
                                     </svg>
                                 </div>
                             </button>
-
+                            <?php 
+                                echo '<input type="text" id="uid_prf" name="uid_prf" value="'. $row['uid'] .'" hidden>';
+                            ?>
                             <div
                                 class="relative mt-8 rounded-full overflow-hidden w-40 h-40 border-4 border-theme-dark dark:border-theme-light">
-                                <img src="./imgs/prf.jpg" alt="Profile Photo">
+                                <?php echo '<img src="./imgs/'. $row['uid'] .'.png" alt="Profile Photo">'; ?>
                             </div>
                         </div>
 
@@ -197,6 +202,7 @@ $row = $stmt->fetch();
                                         class="dark:bg-theme-light dark:text-dark-text bg-theme-dark text-light-text py-2 px-4 rounded-md">
                                         Upload
                                     </button>
+                                    <span class="text-xs text-important-red">Note: Your Unsaved Data will be Lost!</span>
                                 </div>
                             </div>
                         </div>
@@ -795,7 +801,7 @@ $row = $stmt->fetch();
                                         <!-- INPUT-19 -->
                                         <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp19" id="inp19" rows="4">' . htmlspecialchars($row['father']) . ' 
+                                            name="inp19" id="inp19" rows="4">' . htmlspecialchars($row['sister']) . ' 
                                         </textarea>'; ?>
                                     </div>
                                     </p>
@@ -830,10 +836,10 @@ $row = $stmt->fetch();
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-16 -->
-                                        <textarea
+                                        <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp7" id="inp7" rows="4">Address
-                                        </textarea>
+                                            name="inp20" id="inp20" rows="4">' . $row['address'] . '
+                                        </textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -849,10 +855,10 @@ $row = $stmt->fetch();
 
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
-                                        <!-- INPUT-10 -->
-                                        <input type="text" id="inp3" name="inp3" value="123456789, 1234567890"
+                                        <!-- INPUT-21 -->
+                                        <?php echo '<input type="text" value="'. $row['contactno'] .'"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">
+                                            name="inp21" id="inp21">'; ?> 
                                     </div>
                                     </p>
                                 </div>
@@ -898,7 +904,7 @@ $row = $stmt->fetch();
                                     <div
                                         class="border-t border-container-dark dark:border-container-light flex gap-2.5 justify-start items-center">
 
-                                        <!-- INPUT-21 -->
+                                        <!-- INPUT-22 -->
 
                                         <style>
                                             /* From Uiverse.io by catraco */
@@ -989,7 +995,15 @@ $row = $stmt->fetch();
                                         <!-- From Uiverse.io by catraco -->
                                         <label
                                             class="container relative w-min flex justify-center items-center mt-2 dark:bg-theme-light bg-slate-400">
-                                            <input type="checkbox">
+                                            
+                                            <?php 
+                                                if($row['linkshare']){
+                                                    echo '<input name="inp22" id="inp22" type="checkbox" checked>';
+                                                }
+                                                else{
+                                                    echo '<input name="inp22" id="inp22" type="checkbox">';
+                                                }
+                                            ?>
                                             <div class="checkmark"></div>
                                             <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"
                                                 class="celebrate">
@@ -1033,7 +1047,14 @@ $row = $stmt->fetch();
                                         <!-- INPUT-22 -->
                                         <label
                                             class="container relative w-min flex justify-center items-center mt-2 dark:bg-theme-light bg-slate-400">
-                                            <input type="checkbox">
+                                            <?php 
+                                                if($row['globalsearch']){
+                                                    echo '<input name="inp23" id="inp23" type="checkbox" checked>';
+                                                }
+                                                else{
+                                                    echo '<input name="inp23" id="inp23" type="checkbox">';
+                                                }
+                                            ?>
                                             <div class="checkmark"></div>
                                             <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"
                                                 class="celebrate">
@@ -1090,7 +1111,9 @@ $row = $stmt->fetch();
                                                 class="w-full text-left px-4 py-2 bg-transparent rounded-10px focus:outline-none"
                                                 onclick="toggleDropdown3()">
                                                 <span id="dropdownLabel3"
-                                                    class="text-sm basic-input-placeholder">Tula</span>
+                                                    class="text-sm basic-input-placeholder" id="inp25" name="inp25">
+                                                    <?php echo $row['maritalstatus'] ?>
+                                                </span>
                                                 <!-- INPUT-23 -->
                                                 <input type="text" id="inp23" name="inp23" hidden>
                                                 <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon3"
@@ -1302,11 +1325,11 @@ $row = $stmt->fetch();
                 <div
                     class="overflow-hidden border dark:hover:shadow-dark-theme-shadow hover:shadow-light-theme-shadow dark:hover:border hover:border bg-container-light dark:bg-container-dark  border-dark-text dark:border-light-text h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out">
                     <?php
-
-                    echo "<img src='" . $userInfo['picture'] . "' alt=''
-                        onerror='this.style.display='none'; document.getElementById('profile-svg').style.display='block'
-                        onload='this.style.display='block'; document.getElementById('profile-svg').style.display='none';'>"
+                        echo "<img src='" . $userInfo['picture'] . "' alt=''
+                            onerror=\"this.style.display='none'; document.getElementById('profile-svg').style.display='block'\"
+                            onload=\"this.style.display='block'; document.getElementById('profile-svg').style.display='none';\">";
                         ?>
+
 
 
                     <svg id="profile-svg" class="fill-dark-text dark:fill-light-text" xmlns="http://www.w3.org/2000/svg"
