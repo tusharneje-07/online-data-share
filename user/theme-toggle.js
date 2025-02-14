@@ -146,6 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(response => response.text())
             .then(data => {
+                alert(data);
                 cropper.destroy();
                 cropper = null;
                 cropModal.classList.add("hidden");

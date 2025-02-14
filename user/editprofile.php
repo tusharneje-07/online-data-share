@@ -168,7 +168,17 @@ if(!$row){
                             ?>
                             <div
                                 class="relative mt-8 rounded-full overflow-hidden w-40 h-40 border-4 border-theme-dark dark:border-theme-light">
-                                <?php echo '<img src="./imgs/'. $row['uid'] .'.png" alt="Profile Photo">'; ?>
+                                <?php
+                                    $imagePath = "./imgs/" . $row['uid'] . ".png";
+                                    $defaultImage = "./imgs/def_user.jpg";
+
+                                    if (file_exists($imagePath)) {
+                                        echo '<img src="' . $imagePath . '" alt="Profile Photo">';
+                                    } else {
+                                        echo '<img src="' . $defaultImage . '" alt="Default Profile Photo">';
+                                    }
+                                ?>
+
                             </div>
                         </div>
 
