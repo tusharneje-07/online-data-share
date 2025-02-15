@@ -1438,6 +1438,10 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
+.underline-offset-4 {
+  text-underline-offset: 4px;
+}
+
 .opacity-30 {
   opacity: 0.3;
 }

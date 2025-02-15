@@ -395,12 +395,16 @@ $nakshatras = [
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
                                             name="inp5" id="inp5" oninput="handleInput(event)">'; ?>
                                         <div id="city-suggestions"
-                                            class="suggestions flex flex-col gap-1 justify-center dark:bg-theme-light bg-theme-dark dark:text-dark-text text-light-text absolute left-0 top-12 z-20 w-full cursor-pointer max-h-64 overflow-y-auto"> dsjdklj
+                                            class="suggestions flex flex-col gap-1 justify-center dark:bg-theme-light bg-theme-dark dark:text-dark-text text-light-text absolute left-0 top-12 z-20 w-full cursor-pointer max-h-64 overflow-y-auto">
                                         </div>
 
                                         <script>
                                             let timeout = null;
                                             let allCities = []; // Stores all fetched city names
+
+                                            function notfoundclose(){
+                                                document.getElementById("city-suggestions").innerHTML = "";
+                                            }
 
                                             async function fetchCities(query) {
                                                 if (query.length < 2) return; // Search only after 2+ characters
@@ -434,7 +438,7 @@ $nakshatras = [
                                                 dropdown.innerHTML = ""; // Clear previous suggestions
 
                                                 if (suggestions.length === 0) {
-                                                    dropdown.innerHTML = "<div class='dark:bg-odd-line-light bg-odd-line-dark rounded-lg p-2'>No matching cities found</div>";
+                                                    dropdown.innerHTML = "<div id='citynotfound' class='relative dark:bg-odd-line-light bg-odd-line-dark rounded-lg p-2 inline-block gap-1 item-center align-center'> No Matching City Found (Enter City Manually) <br> <span class='text-sm text-white underline-offset-4 p-1 px-2 bg-important-red' onclick='notfoundclose()'> X Close</span></div>";
                                                     return;
                                                 }
 
