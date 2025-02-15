@@ -16,3 +16,19 @@
         width: 100%;
     }
 }
+
+@layer base {
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+    ::-webkit-scrollbar-track {
+        background: theme('colors.gray.200');
+        border-radius: 0.5rem;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: theme('colors.gray.500');
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: theme('colors.gray.700');
+    }
+}

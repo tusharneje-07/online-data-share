@@ -86,6 +86,7 @@ if (isset($_SESSION['access_token'])) {
             'email' => $userInfo->email,
             'picture' => $userInfo->picture
         ];
+        $userInfo =  $_SESSION['userInfo'];
 
     } catch (Exception $e) {
         // Redirect to Error Page.
@@ -292,7 +293,7 @@ if (isset($_SESSION['access_token'])) {
             </div>
 
             <!-- Edit Information -->
-            <div class="relative border border-theme-dark dark:border-theme-light box-border w-full rounded-3xl">
+            <!-- <div class="relative border border-theme-dark dark:border-theme-light box-border w-full rounded-3xl">
                 <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Edit or Change
                     Template
                 </p>
@@ -345,11 +346,27 @@ if (isset($_SESSION['access_token'])) {
                     </div>
 
                 </div>
-            </div>
+            </div> -->
 
             <!-- GENERAL INFO -->
             <div class="relative border border-theme-dark dark:border-theme-light box-border w-full rounded-3xl">
                 <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">General Info</p>
+
+                <div class="absolute flex flex-col top-0 right-0 p-4 px-5 dark:text-dark-text dark:bg-theme-light text-light-text bg-theme-dark gap-3" style="border-top-right-radius: 1.5rem; border-bottom-left-radius: 1.5rem;">
+                
+                <p onclick="window.location.href = 'editprofile'" class="cursor-pointer">
+                    <svg class="fill-light-text dark:fill-dark-text h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
+                </p>
+                <hr class="dark:bg-theme-dark bg-theme-light opacity-50" style="height: 0.15rem; opacity: 50%;">
+                <p class="cursor-pointer">
+                    <svg class="fill-light-text dark:fill-dark-text h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                    <path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
+                
+                </svg>
+                </p>
+
+
+                </div>
 
                 <div class="mb-5 flex flex-col w-full md:w-auto justify-center items-center text-center">
 
@@ -357,7 +374,10 @@ if (isset($_SESSION['access_token'])) {
                     <div class="flex flex-col gap-5 items-center">
                         <div
                             class="mt-8 rounded-full overflow-hidden w-40 h-40 border-4 border-theme-dark dark:border-theme-light">
-                            <img src="./imgs/prf.jpg" alt="Profile Photo">
+                            <?php
+                            echo '<input type="text" id="uid_prf" name="uid_prf" value="' . $userInfo['uid'] . '" hidden>';
+                            echo '<img src="./imgs/'.$userInfo['uid'].'.png" alt="Profile Photo">';
+                            ?>
 
                         </div>
 

@@ -11,9 +11,52 @@ $userInfo = $_SESSION['userInfo']; // This is now an associative array
 $stmt = $pdo->prepare("SELECT * FROM user_information WHERE uid = ?");
 $stmt->execute([$userInfo['uid']]);
 $row = $stmt->fetch();
-if(!$row){
+if (!$row) {
     echo "Error While Featching Query" . var_dump($stmt->errorInfo()) . var_dump($row);
-}  
+}
+$indian_zodiac = [
+    "Mesha (मेष)",
+    "Vrishabha (वृषभ)",
+    "Mithuna (मिथुन)",
+    "Karka (कर्क)",
+    "Simha (सिंह)",
+    "Kanya (कन्या)",
+    "Tula (तूळ)",
+    "Vrishchika (वृश्चिक)",
+    "Dhanu (धनु)",
+    "Makara (मकर)",
+    "Kumbha (कुंभ)",
+    "Meena (मीन)"
+];
+$nakshatras = [
+    "Ashwini (अश्विनी)",
+    "Bharani (भरणी)",
+    "Krittika (कृत्तिका)",
+    "Rohini (रोहिणी)",
+    "Mrigashira (मृगशिरा)",
+    "Ardra (आर्द्रा)",
+    "Punarvasu (पुनर्वसु)",
+    "Pushya (पुष्य)",
+    "Ashlesha (आश्लेषा)",
+    "Magha (मघा)",
+    "Purva Phalguni (पूर्व फाल्गुनी)",
+    "Uttara Phalguni (उत्तर फाल्गुनी)",
+    "Hasta (हस्त)",
+    "Chitra (चित्रा)",
+    "Swati (स्वाति)",
+    "Vishakha (विशाखा)",
+    "Anuradha (अनुराधा)",
+    "Jyeshtha (ज्येष्ठा)",
+    "Moola (मूला)",
+    "Purva Ashadha (पूर्वाषाढ़ा)",
+    "Uttara Ashadha (उत्तराषाढ़ा)",
+    "Shravana (श्रवण)",
+    "Dhanishta (धनिष्ठा)",
+    "Shatabhisha (शतभिषा)",
+    "Purva Bhadrapada (पूर्व भाद्रपदा)",
+    "Uttara Bhadrapada (उत्तर भाद्रपदा)",
+    "Revati (रेवती)"
+];
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +76,8 @@ if(!$row){
     <!-- Croper.js -->
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+
 </head>
 
 <body
@@ -153,7 +198,7 @@ if(!$row){
                             <!-- INPUT-IMG -->
                             <input type="file" id="fileInput" accept=".png, .jpg" class="hidden">
                             <!-- Image Upload Functionality -->
-                            <button id="selectImage">
+                            <button type="button" id="selectImage">
                                 <div
                                     class="absolute z-20 bottom-1 right-1 rounded-full p-3 dark:bg-theme-light bg-theme-dark cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960"
@@ -163,20 +208,20 @@ if(!$row){
                                     </svg>
                                 </div>
                             </button>
-                            <?php 
-                                echo '<input type="text" id="uid_prf" name="uid_prf" value="'. $row['uid'] .'" hidden>';
+                            <?php
+                            echo '<input type="text" id="uid_prf" name="uid_prf" value="' . $row['uid'] . '" hidden>';
                             ?>
                             <div
                                 class="relative mt-8 rounded-full overflow-hidden w-40 h-40 border-4 border-theme-dark dark:border-theme-light">
                                 <?php
-                                    $imagePath = "./imgs/" . $row['uid'] . ".png";
-                                    $defaultImage = "./imgs/def_user.jpg";
+                                $imagePath = "./imgs/" . $row['uid'] . ".png";
+                                $defaultImage = "./imgs/def_user.jpg";
 
-                                    if (file_exists($imagePath)) {
-                                        echo '<img src="' . $imagePath . '" alt="Profile Photo">';
-                                    } else {
-                                        echo '<img src="' . $defaultImage . '" alt="Default Profile Photo">';
-                                    }
+                                if (file_exists($imagePath)) {
+                                    echo '<img src="' . $imagePath . '" alt="Profile Photo">';
+                                } else {
+                                    echo '<img src="' . $defaultImage . '" alt="Default Profile Photo">';
+                                }
                                 ?>
 
                             </div>
@@ -190,7 +235,7 @@ if(!$row){
                             <div class="dark:bg-odd-line-dark bg-theme-light rounded-md shadow-lg p-6 w-full max-w-lg">
                                 <!-- Crop Area -->
                                 <div class="block w-full h-full text-end mb-3">
-                                    <button id="cancelCrop"
+                                    <button type="button" id="cancelCrop"
                                         class="bg-container-light dark:text-dark-text text-black p-3 rounded-full">
 
                                         <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
@@ -212,7 +257,8 @@ if(!$row){
                                         class="dark:bg-theme-light dark:text-dark-text bg-theme-dark text-light-text py-2 px-4 rounded-md">
                                         Upload
                                     </button>
-                                    <span class="text-xs text-important-red">Note: Your Unsaved Data will be Lost!</span>
+                                    <span class="text-xs text-important-red">Note: Your Unsaved Data will be
+                                        Lost!</span>
                                 </div>
                             </div>
                         </div>
@@ -233,15 +279,17 @@ if(!$row){
                             </div>
                             <div class="flex flex-row p-4 rounded-e-10px dark:bg-odd-line-dark bg-odd-line-light">
                                 <p class="text-lg font-semibold">
+                                <form class="w-auto" action="editprofile.php" method="post">
 
-                                <div class="relative w-full">
-                                    <!-- INPUT-1 -->
-                                     <?php 
-                                     echo '<input class="bg-transparent outline-none" type="text" id="inp1" name="inp1" value="' . $row['fullname'] . '">'; ?>
-    
-                                    
-                                </div>
-                                </p>
+
+                                    <div class="relative w-full">
+                                        <!-- INPUT-1 -->
+                                        <?php
+                                        echo '<input class="bg-transparent outline-none" type="text" id="inp1" name="inp1" value="' . htmlspecialchars($row['fullname']) . '">'; ?>
+
+
+                                    </div>
+                                    </p>
                             </div>
                         </div>
 
@@ -280,9 +328,9 @@ if(!$row){
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-3 -->
-                                        <?php echo '<input type="number" id="inp3" name="inp3" value="' . $row['height'] .'"
+                                        <?php echo '<input type="number" id="inp3" name="inp3" value="' . htmlspecialchars($row['height']) . '"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp3" id="inp3">'; ?>
+                                            name="inp3" id="inp3" step="0.1">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -305,9 +353,9 @@ if(!$row){
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-4 -->
-                                        <?php echo '<input type="number" value="' . $row['weight'] .'"
+                                        <?php echo '<input type="number" value="' . htmlspecialchars($row['weight']) . '"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp4" id="inp4">'; ?>
+                                            name="inp4" id="inp4" step="0.1">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -343,9 +391,81 @@ if(!$row){
 
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark w-full">
-                                            <?php echo '<input type="text" value="' . $row['location'] .'"
+                                        <?php echo '<input type="text" value="' . htmlspecialchars($row['location']) . '"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp5" id="inp5">'; ?>
+                                            name="inp5" id="inp5" oninput="handleInput(event)">'; ?>
+                                        <div id="city-suggestions"
+                                            class="suggestions flex flex-col gap-1 justify-center dark:bg-theme-light bg-theme-dark dark:text-dark-text text-light-text absolute left-0 top-12 z-20 w-full cursor-pointer max-h-64 overflow-y-auto"> dsjdklj
+                                        </div>
+
+                                        <script>
+                                            let timeout = null;
+                                            let allCities = []; // Stores all fetched city names
+
+                                            async function fetchCities(query) {
+                                                if (query.length < 2) return; // Search only after 2+ characters
+
+                                                let apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${query}&countrycodes=IN&limit=50`;
+
+                                                try {
+                                                    let response = await fetch(apiUrl);
+                                                    let data = await response.json();
+                                                    allCities = data.map(city => city.display_name); // Store city names as strings
+
+                                                    let refinedCities = fuzzySearch(query, allCities); // Apply typo correction
+                                                    showSuggestions(refinedCities);
+                                                } catch (error) {
+                                                    console.error("Error fetching cities:", error);
+                                                }
+                                            }
+
+                                            function fuzzySearch(query, cities) {
+                                                const options = {
+                                                    includeScore: true,
+                                                    threshold: 0.4, // Adjust sensitivity (lower = stricter match)
+                                                    keys: ["name"]
+                                                };
+                                                const fuse = new Fuse(cities.map(name => ({ name })), options);
+                                                return fuse.search(query).map(result => result.item.name); // Extract city names
+                                            }
+
+                                            function showSuggestions(suggestions) {
+                                                let dropdown = document.getElementById("city-suggestions");
+                                                dropdown.innerHTML = ""; // Clear previous suggestions
+
+                                                if (suggestions.length === 0) {
+                                                    dropdown.innerHTML = "<div class='dark:bg-odd-line-light bg-odd-line-dark rounded-lg p-2'>No matching cities found</div>";
+                                                    return;
+                                                }
+
+                                                suggestions.forEach(city => {
+                                                    let option = document.createElement("div");
+                                                    let hrline = document.createElement("hr");
+
+                                                    option.classList.add("suggestion");
+                                                    option.classList.add("dark:bg-theme-light");
+                                                    option.classList.add("bg-theme-dark");
+                                                    option.classList.add("border-b");
+                                                    // option.classList.add("rounded-lg");
+                                                    option.classList.add("p-1");
+                                                    option.classList.add("m-1");
+                                                    option.textContent = city;
+                                                    option.onclick = () => {
+                                                        document.getElementById("inp5").value = city;
+                                                        dropdown.innerHTML = ""; // Hide suggestions after selection
+                                                    };
+                                                    dropdown.appendChild(option);
+                                                });
+                                            }
+
+                                            function handleInput(event) {
+                                                clearTimeout(timeout);
+                                                let query = event.target.value.trim();
+                                                timeout = setTimeout(() => fetchCities(query), 500); // Delay to reduce API calls
+                                            }
+                                        </script>
+                                        <style>
+                                        </style>
                                     </div>
                                     </p>
                                 </div>
@@ -362,7 +482,7 @@ if(!$row){
                                 <div class="relative w-full"
                                     onfocus="showPopup('In Dark Mode Some Icons Might Not Seen Properly!')">
 
-                                        <?php echo '<input onfocus="showPopup(\'In Dark Mode Some Icons Might Not Be Seen Properly!\')" type="time" id="inp6" name="inp6" value="' . date('H:i', strtotime($row['timeofbirth'])) . '" class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark" id="time-picker" />'; ?>
+                                    <?php echo '<input onfocus="showPopup(\'In Dark Mode Some Icons Might Not Be Seen Properly!\')" type="time" id="inp6" name="inp6" value="' . date('H:i', strtotime($row['timeofbirth'])) . '" class="text-sm w-full p-0 bg-transparent outline-none pr-15 filter-custom-calendar-dark" id="time-picker" />'; ?>
 
                                 </div>
                                 </p>
@@ -398,8 +518,7 @@ if(!$row){
                                         <!-- INPUT-7 -->
                                         <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp7" id="inp7" rows="4">'. $row['work'] .'
-                                        </textarea>'; ?>
+                                            name="inp7" id="inp7" rows="4">' . htmlspecialchars($row['work']) . '</textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -416,8 +535,8 @@ if(!$row){
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-8 -->
-                                        
-                                        <?php echo '<input type="number" id="inp8" name="inp8" value="' . $row['income'] . '"
+
+                                        <?php echo '<input type="number" id="inp8" name="inp8" value="' . htmlspecialchars($row['income']) . '"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full">'; ?>
                                     </div>
                                     </p>
@@ -456,8 +575,7 @@ if(!$row){
                                         <!-- INPUT-9 -->
                                         <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp9" id="inp9" rows="4">' . $row['education'] . '
-                                        </textarea>'; ?>
+                                            name="inp9" id="inp9" rows="4">' . htmlspecialchars($row['education']) . '</textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -491,7 +609,7 @@ if(!$row){
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-10 -->
-                                        <?php echo '<input type="text" value="'. $row['religion'] .'"
+                                        <?php echo '<input type="text" value="' . htmlspecialchars($row['religion']) . '"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
                                             name="inp10" id="inp10">'; ?>
                                     </div>
@@ -511,7 +629,7 @@ if(!$row){
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-11 -->
-                                        <?php echo '<input type="text" value="'. $row['caste'] .'"
+                                        <?php echo '<input type="text" value="' . htmlspecialchars($row['caste']) . '"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
                                             name="inp11" id="inp11">'; ?>
                                     </div>
@@ -530,8 +648,8 @@ if(!$row){
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-12 -->
-                                        
-                                        <?php echo '<input type="text" value="'. $row['subcast'] .'"
+
+                                        <?php echo '<input type="text" value="' . htmlspecialchars($row['subcast']) . '"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
                                             name="inp12" id="inp12">'; ?>
                                     </div>
@@ -569,12 +687,14 @@ if(!$row){
 
                                         <div class="relative inline-block basic-input w-full rounded-10px">
                                             <!-- Trigger -->
-                                            <button
+                                            <button type="button"
                                                 class="w-full text-left px-4 py-2 bg-transparent rounded-10px focus:outline-none"
                                                 onclick="toggleDropdown()">
-                                                <span id="dropdownLabel" name="inp13" id="inp13"
-                                                    class="text-sm basic-input-placeholder"><?php echo $row['rashi'] ?></span>
-                                                <input type="text" id="inp13" name="inp13" hidden>
+                                                <span id="dropdownLabel" id="inp13"
+                                                    class="text-sm basic-input-placeholder"><?php echo htmlspecialchars($row['rashi']) ?></span>
+
+                                                <?php echo '<input type="text" id="inp13" name="inp13" value="' . htmlspecialchars($row['rashi']) . '" hidden>'; ?>
+
                                                 <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon"
                                                     class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -586,7 +706,17 @@ if(!$row){
                                             <!-- Dropdown menu -->
                                             <ul id="dropdownMenu"
                                                 class="absolute left-0 z-10 w-full basic-input-placeholder rounded-10px shadow-md hidden">
-                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+
+                                                <?php
+
+                                                foreach ($indian_zodiac as $rashi) {
+                                                    echo '<li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+                                                    onclick="selectOption(\'' . $rashi . '\')">
+                                                    ' . $rashi . '
+                                                </li>';
+                                                }
+                                                ?>
+                                                <!-- <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
                                                     onclick="selectOption('Data 1')">
                                                     Data 1
                                                 </li>
@@ -597,7 +727,7 @@ if(!$row){
                                                 <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
                                                     onclick="selectOption('Data 3')">
                                                     Data 3
-                                                </li>
+                                                </li> -->
                                             </ul>
                                         </div>
 
@@ -642,12 +772,13 @@ if(!$row){
 
                                         <div class="relative inline-block basic-input w-full rounded-10px">
                                             <!-- Trigger -->
-                                            <button
-                                                class="w-full text-left px-4 py-2 bg-transparent rounded-10px focus:outline-none"
+                                            <button type="button"
+                                                class="w-full text-left px-4 py-2 bg-transparent rounded-10px focus:outline-none flex"
                                                 onclick="toggleDropdown2()">
-                                                <span id="dropdownLabel2" name="inp13" id="inp13"
-                                                    class="text-sm basic-input-placeholder"><?php echo $row['nakshatra'] ?></span>
-                                                <input type="text" id="inp14" name="inp14" hidden>
+                                                <span id="dropdownLabel2" id="inp14"
+                                                    class="text-sm basic-input-placeholder w-full"><?php echo htmlspecialchars($row['nakshatra']) ?></span>
+
+                                                <?php echo '<input type="text" id="inp14" name="inp14" value="' . htmlspecialchars($row['nakshatra']) . '" hidden>'; ?>
                                                 <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon2"
                                                     class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -659,18 +790,23 @@ if(!$row){
                                             <!-- Dropdown menu -->
                                             <ul id="dropdownMenu2"
                                                 class="absolute left-0 z-10 w-full basic-input-placeholder rounded-10px shadow-md hidden">
-                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
-                                                    onclick="selectOption2('Data 1')">
-                                                    Data 1
-                                                </li>
-                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+
+                                                <?php
+                                                foreach ($nakshatras as $nakshatra) {
+                                                    echo '<li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
+                                                                onclick="selectOption2(\'' . $nakshatra . '\')">' . $nakshatra . '</li>';
+                                                }
+                                                ?>
+
+
+                                                <!-- <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
                                                     onclick="selectOption2('Data 2')">
                                                     Data 2
                                                 </li>
                                                 <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
                                                     onclick="selectOption2('Data 3')">
                                                     Data 3
-                                                </li>
+                                                </li> -->
                                             </ul>
                                         </div>
 
@@ -718,7 +854,7 @@ if(!$row){
                                         <!-- INPUT-15 -->
                                         <!-- birthname -->
 
-                                        <?php echo '<input type="text" value="'. $row['birthname'] .'"
+                                        <?php echo '<input type="text" value="' . htmlspecialchars($row['birthname']) . '"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
                                             name="inp15" id="inp15">'; ?>
                                     </div>
@@ -754,8 +890,7 @@ if(!$row){
                                         <!-- INPUT-16 -->
                                         <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp16" id="inp16" rows="4">' . htmlspecialchars($row['father']) . ' 
-                                        </textarea>'; ?>
+                                            name="inp16" id="inp16" rows="4">' . htmlspecialchars($row['father']) . '</textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -773,8 +908,7 @@ if(!$row){
                                         <!-- INPUT-17 -->
                                         <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp17" id="inp17" rows="4">' . htmlspecialchars($row['mother']) . ' 
-                                        </textarea>'; ?>
+                                            name="inp17" id="inp17" rows="4">' . htmlspecialchars($row['mother']) . '</textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -792,8 +926,7 @@ if(!$row){
                                         <!-- INPUT-18 -->
                                         <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp18" id="inp18" rows="4">' . htmlspecialchars($row['brother']) . ' 
-                                        </textarea>'; ?>
+                                            name="inp18" id="inp18" rows="4">' . htmlspecialchars($row['brother']) . '</textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -811,8 +944,7 @@ if(!$row){
                                         <!-- INPUT-19 -->
                                         <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp19" id="inp19" rows="4">' . htmlspecialchars($row['sister']) . ' 
-                                        </textarea>'; ?>
+                                            name="inp19" id="inp19" rows="4">' . htmlspecialchars($row['sister']) . ' </textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -848,8 +980,7 @@ if(!$row){
                                         <!-- INPUT-16 -->
                                         <?php echo '<textarea
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full resize-none"
-                                            name="inp20" id="inp20" rows="4">' . $row['address'] . '
-                                        </textarea>'; ?>
+                                            name="inp20" id="inp20" rows="4">' . htmlspecialchars($row['address']) . '</textarea>'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -866,9 +997,9 @@ if(!$row){
                                     <p class="text-sm w-full">
                                     <div class="bg-odd-line-light dark:bg-odd-line-dark rounded-10px w-full">
                                         <!-- INPUT-21 -->
-                                        <?php echo '<input type="text" value="'. $row['contactno'] .'"
+                                        <?php echo '<input type="text" value="' . htmlspecialchars($row['contactno']) . '"
                                             class="appearance-none text-sm p-0 bg-transparent outline-none w-full"
-                                            name="inp21" id="inp21">'; ?> 
+                                            name="inp21" id="inp21">'; ?>
                                     </div>
                                     </p>
                                 </div>
@@ -1005,14 +1136,13 @@ if(!$row){
                                         <!-- From Uiverse.io by catraco -->
                                         <label
                                             class="container relative w-min flex justify-center items-center mt-2 dark:bg-theme-light bg-slate-400">
-                                            
-                                            <?php 
-                                                if($row['linkshare']){
-                                                    echo '<input name="inp22" id="inp22" type="checkbox" checked>';
-                                                }
-                                                else{
-                                                    echo '<input name="inp22" id="inp22" type="checkbox">';
-                                                }
+
+                                            <?php
+                                            if ($row['linkshare']) {
+                                                echo '<input name="inp22" id="inp22" type="checkbox" checked>';
+                                            } else {
+                                                echo '<input name="inp22" id="inp22" type="checkbox">';
+                                            }
                                             ?>
                                             <div class="checkmark"></div>
                                             <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"
@@ -1057,13 +1187,12 @@ if(!$row){
                                         <!-- INPUT-22 -->
                                         <label
                                             class="container relative w-min flex justify-center items-center mt-2 dark:bg-theme-light bg-slate-400">
-                                            <?php 
-                                                if($row['globalsearch']){
-                                                    echo '<input name="inp23" id="inp23" type="checkbox" checked>';
-                                                }
-                                                else{
-                                                    echo '<input name="inp23" id="inp23" type="checkbox">';
-                                                }
+                                            <?php
+                                            if ($row['globalsearch']) {
+                                                echo '<input name="inp23" id="inp23" type="checkbox" checked>';
+                                            } else {
+                                                echo '<input name="inp23" id="inp23" type="checkbox">';
+                                            }
                                             ?>
                                             <div class="checkmark"></div>
                                             <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"
@@ -1103,7 +1232,7 @@ if(!$row){
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Marital Status</p>
                             <p class="text-xs ml-2 font-bold text-important-red">
-                                If You Set Marital Status to 'NOT MARRIED' Your Inforamtion Will Not Be Sharable
+                                If You Set Marital Status to 'MARRIED' Your Inforamtion Will Not Be Sharable
                                 Anymore.
                             </p>
                             <div class="flex">
@@ -1117,15 +1246,15 @@ if(!$row){
 
                                         <div class="relative inline-block basic-input w-full rounded-10px">
                                             <!-- Trigger -->
-                                            <button
+                                            <button type="button"
                                                 class="w-full text-left px-4 py-2 bg-transparent rounded-10px focus:outline-none"
                                                 onclick="toggleDropdown3()">
-                                                <span id="dropdownLabel3"
-                                                    class="text-sm basic-input-placeholder" id="inp25" name="inp25">
+                                                <span id="dropdownLabel3" class="text-sm basic-input-placeholder"
+                                                    id="inp24">
                                                     <?php echo $row['maritalstatus'] ?>
                                                 </span>
                                                 <!-- INPUT-23 -->
-                                                <input type="text" id="inp23" name="inp23" hidden>
+                                                <?php echo '<input type="text" id="inp24" name="inp24" value="' . $row['maritalstatus'] . '" hidden>'; ?>
                                                 <svg xmlns="http://www.w3.org/2000/svg" id="basic-dropdown-icon3"
                                                     class="h-5 w-5 float-right basic-input-placeholder transition-all duration-150 ease-out"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1138,17 +1267,14 @@ if(!$row){
                                             <ul id="dropdownMenu3"
                                                 class="absolute left-0 z-10 w-full basic-input-placeholder rounded-10px shadow-md hidden">
                                                 <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
-                                                    onclick="selectOption3('Data 1')">
-                                                    Data 1
+                                                    onclick="selectOption3('UNMARRIED')">
+                                                    UNMARRID
                                                 </li>
                                                 <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
-                                                    onclick="selectOption3('Data 2')">
-                                                    Data 2
+                                                    onclick="selectOption3('MARRIED')">
+                                                    MARRIED
                                                 </li>
-                                                <li class="px-4 py-2 bg-container-light hover:bg-odd-line-light dark:hover:bg-odd-line-dark dark:bg-theme-dark cursor-pointer text-sm"
-                                                    onclick="selectOption3('Data 3')">
-                                                    Data 3
-                                                </li>
+
                                             </ul>
                                         </div>
 
@@ -1163,10 +1289,10 @@ if(!$row){
 
                                             function selectOption3(option) {
                                                 const label = document.getElementById('dropdownLabel3');
-                                                const input = document.getElementById('inp23');
+                                                const input = document.getElementById('inp24');
                                                 input.value = option;
                                                 label.textContent = option;
-                                                toggleDropdown();
+                                                toggleDropdown3();
                                             }
                                         </script>
 
@@ -1199,7 +1325,7 @@ if(!$row){
                         <div class="flex flex-col text-start gap-1 w-full">
                             <div class="flex gap-3 w-full">
 
-                                <Button
+                                <Button name="save-information"
                                     class="flex flex-row gap-2 bg-odd-line-light dark:bg-odd-line-dark rounded-10px h-full w-full ">
                                     <div
                                         class="flex items-center bg-theme-dark dark:bg-theme-light p-halfp rounded-s-10px h-full">
@@ -1239,6 +1365,7 @@ if(!$row){
 
                 </div>
             </div>
+            </form>
 
 
 
@@ -1335,10 +1462,10 @@ if(!$row){
                 <div
                     class="overflow-hidden border dark:hover:shadow-dark-theme-shadow hover:shadow-light-theme-shadow dark:hover:border hover:border bg-container-light dark:bg-container-dark  border-dark-text dark:border-light-text h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out">
                     <?php
-                        echo "<img src='" . $userInfo['picture'] . "' alt=''
+                    echo "<img src='" . $userInfo['picture'] . "' alt=''
                             onerror=\"this.style.display='none'; document.getElementById('profile-svg').style.display='block'\"
                             onload=\"this.style.display='block'; document.getElementById('profile-svg').style.display='none';\">";
-                        ?>
+                    ?>
 
 
 
@@ -1357,6 +1484,61 @@ if(!$row){
 
 
     <script src="./theme-toggle.js"></script>
+    <!-- <script src="./cityFetch.js"></script> -->
+
 </body>
+<?php
+if (isset($_POST['save-information'])) {
+    $data = json_decode(json_encode($_POST), true);
+
+    $keys = ['inp22', 'inp23'];
+
+    foreach ($keys as $key) {
+        $data[$key] = array_key_exists($key, $data) ? "1" : "0";
+    }
+
+    $stmt = $pdo->prepare("UPDATE user_information SET `fullname`=?,`dob`=?,`height`=?,`weight`=?,`location`=?,`timeofbirth`=?,`work`=?,`income`=?,`education`=?,`religion`=?,`caste`=?,`subcast`=?,`rashi`=?,`nakshatra`=?,`birthname`=?,`father`=?,`mother`=?,`brother`=?,`sister`=?,`address`=?,`contactno`=?,`linkshare`=?,`globalsearch`=?,`maritalstatus`=? WHERE uid = ?");
+
+
+
+
+    if (
+        $stmt->execute([
+            $data['inp1'],
+            $data['inp2'],
+            $data['inp3'],
+            $data['inp4'],
+            $data['inp5'],
+            $data['inp6'],
+            $data['inp7'],
+            $data['inp8'],
+            $data['inp9'],
+            $data['inp10'],
+            $data['inp11'],
+            $data['inp12'],
+            $data['inp13'],
+            $data['inp14'],
+            $data['inp15'],
+            $data['inp16'],
+            $data['inp17'],
+            $data['inp18'],
+            $data['inp19'],
+            $data['inp20'],
+            $data['inp21'],
+            $data['inp22'],
+            $data['inp23'],
+            $data['inp24'],
+            $userInfo['uid'],
+        ])
+    ) {
+        echo '<script>alert("User Data is Updated"); window.location.href = "profile";</script>';
+    } else {
+        echo '<script>alert("Error While Updating Information");</script>';
+    }
+    unset($_POST['save-information']);
+    // header('Location: profile');
+
+}
+?>
 
 </html>

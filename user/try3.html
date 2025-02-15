@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Auto-Suggestion with Typos Handling</title>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script> 
+    <script>
+        let timeout = null;
+        let allCities = []; // Stores all fetched city names
+
+        async function fetchCities(query) {
+            if (query.length < 2) return; // Search only after 2+ characters
+
+            let apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${query}&countrycodes=IN&limit=50`;
+
+            try {
+                let response = await fetch(apiUrl);
+                let data = await response.json();
+                allCities = data.map(city => city.display_name); // Store city names as strings
+
+                let refinedCities = fuzzySearch(query, allCities); // Apply typo correction
+                showSuggestions(refinedCities);
+            } catch (error) {
+                console.error("Error fetching cities:", error);
+            }
+        }
+
+        function fuzzySearch(query, cities) {
+            const options = {
+                includeScore: true,
+                threshold: 0.4, // Adjust sensitivity (lower = stricter match)
+                keys: ["name"]
+            };
+            const fuse = new Fuse(cities.map(name => ({ name })), options);
+            return fuse.search(query).map(result => result.item.name); // Extract city names
+        }
+
+        function showSuggestions(suggestions) {
+            let dropdown = document.getElementById("city-suggestions");
+            dropdown.innerHTML = ""; // Clear previous suggestions
+
+            if (suggestions.length === 0) {
+                dropdown.innerHTML = "<div class='suggestion'>No matching cities found</div>";
+                return;
+            }
+
+            suggestions.forEach(city => {
+                let option = document.createElement("div");
+                option.classList.add("suggestion");
+                option.textContent = city;
+                option.onclick = () => {
+                    document.getElementById("city-input").value = city;
+                    dropdown.innerHTML = ""; // Hide suggestions after selection
+                };
+                dropdown.appendChild(option);
+            });
+        }
+
+        function handleInput(event) {
+            clearTimeout(timeout);
+            let query = event.target.value.trim();
+            timeout = setTimeout(() => fetchCities(query), 500); // Delay to reduce API calls
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .input-box {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .suggestions {
+            width: 300px;
+            border: 1px solid #ccc;
+            background: white;
+            position: absolute;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            border-radius: 5px;
+        }
+        .suggestion {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+        }
+        .suggestion:hover {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Indian Cities Auto-Suggestion</h2>
+    <input type="text" id="city-input" class="input-box" placeholder="Type a city name..." oninput="handleInput(event)">
+    <div id="city-suggestions" class="suggestions"></div>
+
+</body>
+</html>

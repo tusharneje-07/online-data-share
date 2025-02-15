@@ -3,16 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown with MathJax</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async 
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
+    <title>City Auto-Suggestion (India)</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #suggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            width: 300px;
+        }
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
-    <p>Population standard deviation (ddof=0):</p>
-    <p>\[
-    \sigma = \sqrt{\frac{1}{N} \sum_{i=1}^{N} (x_i - \bar{x})^2}
-    \]</p>
+
+    <h3>Search for a City in India</h3>
+    <input type="text" id="cityInput" placeholder="Type city name..." autocomplete="off">
+    <div id="suggestions"></div>
+
+    <script>
+        let typingTimer;
+        const debounceTime = 300; // Reduce API calls
+        const cityList = [
+            "Mumbai, Maharashtra", "Delhi, Delhi", "Bengaluru, Karnataka", "Hyderabad, Telangana",
+            "Ahmedabad, Gujarat", "Chennai, Tamil Nadu", "Kolkata, West Bengal", "Surat, Gujarat",
+            "Pune, Maharashtra", "Jaipur, Rajasthan", "Lucknow, Uttar Pradesh", "Kanpur, Uttar Pradesh",
+            "Nagpur, Maharashtra", "Indore, Madhya Pradesh", "Thane, Maharashtra", "Bhopal, Madhya Pradesh",
+            "Visakhapatnam, Andhra Pradesh", "Patna, Bihar", "Vadodara, Gujarat", "Ghaziabad, Uttar Pradesh",
+            "Ludhiana, Punjab", "Agra, Uttar Pradesh", "Nashik, Maharashtra", "Meerut, Uttar Pradesh",
+            "Rajkot, Gujarat", "Varanasi, Uttar Pradesh", "Srinagar, Jammu and Kashmir", "Aurangabad, Maharashtra",
+            "Dhanbad, Jharkhand", "Amritsar, Punjab", "Ichalkaranji, Maharashtra", "Kalyan-Dombivli, Maharashtra"
+        ]; // ✅ Preloaded City Data (Add More for Accuracy)
+
+        $(document).ready(function() {
+            $("#cityInput").on("input", function() {
+                clearTimeout(typingTimer);
+                let query = $(this).val().trim().toLowerCase();
+                if (query.length < 2) return;
+
+                typingTimer = setTimeout(() => {
+                    showSuggestions(query);
+                }, debounceTime);
+            });
+
+            function showSuggestions(query) {
+                $("#suggestions").empty();
+                let matches = cityList.filter(city => city.toLowerCase().includes(query));
+                
+                if (matches.length === 0) {
+                    $("#suggestions").html("<div class='suggestion-item'>No city found</div>");
+                    return;
+                }
+
+                matches.slice(0, 5).forEach(city => {
+                    $("#suggestions").append(`<div class='suggestion-item' data-full='${city}'>${city}</div>`);
+                });
+            }
+
+            $(document).on("click", ".suggestion-item", function() {
+                $("#cityInput").val($(this).data("full"));
+                $("#suggestions").empty();
+            });
+        });
+    </script>
+
 </body>
 </html>
