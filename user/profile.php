@@ -125,7 +125,9 @@ $data = array();
 foreach ($row as $d) {
     array_push($data, $d);
 }
-echo $data[2];
+if (count($data) <= 0) {
+    // header("Location: profile");
+}
 ?>
 
 <!DOCTYPE html>
@@ -829,7 +831,7 @@ echo $data[2];
                                     <p class="text-sm"><?php echo $data[26]; ?></p>
                                 </div>
 
-                                <div class="bg-theme-dark dark:bg-theme-light p-1 fill-light-text dark:fill-dark-text flex item-center h-full rounded-e-10px w-12 justify-center">
+                                <div class="bg-theme-dark dark:bg-theme-light p-1 fill-light-text dark:fill-dark-text flex item-center h-full rounded-e-10px w-12 justify-center cursor-pointer">
                                 <!-- <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 w-full"> -->
 
                                     <svg class="fill-light-text dark:fill-dark-text w-5"
