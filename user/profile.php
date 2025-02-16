@@ -86,7 +86,7 @@ if (isset($_SESSION['access_token'])) {
             'email' => $userInfo->email,
             'picture' => $userInfo->picture
         ];
-        $userInfo =  $_SESSION['userInfo'];
+        $userInfo = $_SESSION['userInfo'];
 
     } catch (Exception $e) {
         // Redirect to Error Page.
@@ -112,6 +112,20 @@ if (isset($_SESSION['access_token'])) {
     header("Location: login");
     exit();
 }
+
+
+$uid = $userInfo['uid'];
+$stmt = $pdo->prepare("SELECT * FROM user_information WHERE uid = ?");
+if (!$stmt->execute([$uid])) {
+    echo "Error -<>";
+}
+
+$row = $stmt->fetch();
+$data = array();
+foreach ($row as $d) {
+    array_push($data, $d);
+}
+echo $data[2];
 ?>
 
 <!DOCTYPE html>
@@ -352,18 +366,25 @@ if (isset($_SESSION['access_token'])) {
             <div class="relative border border-theme-dark dark:border-theme-light box-border w-full rounded-3xl">
                 <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">General Info</p>
 
-                <div class="absolute flex flex-col top-0 right-0 p-4 px-5 dark:text-dark-text dark:bg-theme-light text-light-text bg-theme-dark gap-3" style="border-top-right-radius: 1.5rem; border-bottom-left-radius: 1.5rem;">
-                
-                <p onclick="window.location.href = 'editprofile'" class="cursor-pointer">
-                    <svg class="fill-light-text dark:fill-dark-text h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
-                </p>
-                <hr class="dark:bg-theme-dark bg-theme-light opacity-50" style="height: 0.15rem; opacity: 50%;">
-                <p class="cursor-pointer">
-                    <svg class="fill-light-text dark:fill-dark-text h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-                    <path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
-                
-                </svg>
-                </p>
+                <div class="absolute flex flex-col top-0 right-0 p-4 px-5 dark:text-dark-text dark:bg-theme-light text-light-text bg-theme-dark gap-3"
+                    style="border-top-right-radius: 1.5rem; border-bottom-left-radius: 1.5rem;">
+
+                    <p onclick="window.location.href = 'editprofile'" class="cursor-pointer">
+                        <svg class="fill-light-text dark:fill-dark-text h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 -960 960 960">
+                            <path
+                                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z" />
+                        </svg>
+                    </p>
+                    <hr class="dark:bg-theme-dark bg-theme-light opacity-50" style="height: 0.15rem; opacity: 50%;">
+                    <p class="cursor-pointer">
+                        <svg class="fill-light-text dark:fill-dark-text h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 -960 960 960">
+                            <path
+                                d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
+
+                        </svg>
+                    </p>
 
 
                 </div>
@@ -376,14 +397,14 @@ if (isset($_SESSION['access_token'])) {
                             class="mt-8 rounded-full overflow-hidden w-40 h-40 border-4 border-theme-dark dark:border-theme-light">
                             <?php
                             echo '<input type="text" id="uid_prf" name="uid_prf" value="' . $userInfo['uid'] . '" hidden>';
-                            echo '<img src="./imgs/'.$userInfo['uid'].'.png" alt="Profile Photo">';
+                            echo '<img src="./imgs/' . $userInfo['uid'] . '.png" alt="Profile Photo">';
                             ?>
 
                         </div>
 
                         <!-- Name -->
                         <div class="p-4 rounded-10px dark:bg-odd-line-dark bg-odd-line-light">
-                            <p class="text-lg font-semibold">Tushar Sadashiv Neje</p>
+                            <p class="text-lg font-semibold"><?php echo $data[2]; ?></p>
                         </div>
                     </div>
                     <!-- General Info -->
@@ -392,21 +413,21 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Date of Birth</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">15/07/2005</p>
+                                <p class="text-sm"><?php echo $data[3]; ?></p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Height</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">6.0 Ft</p>
+                                <p class="text-sm"><?php echo $data[4]; ?> Ft</p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Weight</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">65 kgs</p>
+                                <p class="text-sm"><?php echo $data[5]; ?> kgs</p>
                             </div>
                         </div>
 
@@ -427,7 +448,7 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Location of Birth</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Ichalkaranji</p>
+                                <p class="text-sm"><?php echo $data[6]; ?></p>
                             </div>
                         </div>
 
@@ -435,7 +456,7 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Time of Birth</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">06:55 AM</p>
+                                <p class="text-sm"><?php echo strtotime($data[7]); ?></p>
                             </div>
                         </div>
                     </div>
@@ -458,14 +479,14 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Job/Business</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">JOB---</p>
+                                <p class="text-sm"><?php echo $data[8]; ?></p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Income</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">85 LPA</p>
+                                <p class="text-sm"><?php echo $data[9]; ?> LPA</p>
                             </div>
                         </div>
                     </div>
@@ -488,7 +509,7 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Education</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Ichalkaranji</p>
+                                <p class="text-sm"><?php echo $data[10]; ?></p>
                             </div>
                         </div>
                     </div>
@@ -512,7 +533,7 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Religion</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Hindu</p>
+                                <p class="text-sm"><?php echo $data[11]; ?></p>
                             </div>
                         </div>
 
@@ -520,14 +541,14 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Caste</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Koshti</p>
+                                <p class="text-sm"><?php echo $data[12]; ?></p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Sub Caste</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Hatagar Koshti</p>
+                                <p class="text-sm"><?php echo $data[13]; ?></p>
                             </div>
                         </div>
 
@@ -550,14 +571,14 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Rashi</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Libra</p>
+                                <p class="text-sm"><?php echo $data[14]; ?></p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Nakshatra</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Swati</p>
+                                <p class="text-sm"><?php echo $data[15]; ?></p>
                             </div>
                         </div>
                     </div>
@@ -567,7 +588,7 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Birth Name (Navras Nav)</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">idk</p>
+                                <p class="text-sm"><?php echo $data[16]; ?></p>
                             </div>
                         </div>
                     </div>
@@ -589,36 +610,28 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Father's Name & Occupation</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto
-                                    provident reiciendis sapiente illo debitis. Ullam sequi a accusamus dolores non
-                                    voluptatum repellendus dolor, hic tempora nobis minima dicta cum dignissimos.</p>
+                                <p class="text-sm"><?php echo $data[17]; ?></p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Mother's Name & Occupation</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto
-                                    provident reiciendis sapiente illo debitis. Ullam sequi a accusamus dolores non
-                                    voluptatum repellendus dolor, hic tempora nobis minima dicta cum dignissimos.</p>
+                                <p class="text-sm"><?php echo $data[18]; ?></p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Brother's Name & Occupation</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto
-                                    provident reiciendis sapiente illo debitis. Ullam sequi a accusamus dolores non
-                                    voluptatum repellendus dolor, hic tempora nobis minima dicta cum dignissimos.</p>
+                                <p class="text-sm"><?php echo $data[19]; ?></p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Sister's Name & Occupation</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto
-                                    provident reiciendis sapiente illo debitis. Ullam sequi a accusamus dolores non
-                                    voluptatum repellendus dolor, hic tempora nobis minima dicta cum dignissimos.</p>
+                                <p class="text-sm"><?php echo $data[20]; ?></p>
                             </div>
                         </div>
 
@@ -643,7 +656,7 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Address</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed odio.
+                                <p class="text-sm"><?php echo $data[21]; ?>
                                 </p>
                             </div>
                         </div>
@@ -651,7 +664,7 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Contact Number</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">10206484654, 265647532416</p>
+                                <p class="text-sm"><?php echo $data[22]; ?></p>
                             </div>
                         </div>
 
@@ -695,9 +708,28 @@ if (isset($_SESSION['access_token'])) {
                                         class="border-t border-container-dark dark:border-container-light flex gap-2.5 justify-start items-center">
 
                                         <!-- INPUT-21 -->
-                                        <input class="size-4 mt-2 rounded-lg p-4" type="checkbox" id="" name=""
-                                            disabled>
-                                        <p class="mt-2 text-sm">Link Sharing Is Not Enable.</p>
+                                        <?php
+
+                                        if ($data[23]) {
+                                            echo '<div class="w-5 h-5 mt-2 p-1 dark:bg-theme-light bg-theme-dark rounded-full">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-auto fill-light-text dark:fill-dark-text" viewBox="0 -960 960 960">
+                                                <path d="M382-208 122-468l90-90 170 170 366-366 90 90-456 456Z"/> 
+                                                
+                                            </svg>
+                                            </div>
+                                            <p class="mt-2 text-sm">Link Sharing Is Enabled.</p>';
+                                        } else {
+                                            echo '<div class="w-5 h-5 mt-2 p-1 dark:bg-theme-light bg-theme-dark rounded-full">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-auto fill-light-text dark:fill-dark-text" viewBox="0 -960 960 960">
+                                                <path d="m256-168-88-88 224-224-224-224 88-88 224 224 224-224 88 88-224 224 224 224-88 88-224-224-224 224Z"/>
+                                                
+                                            </svg>
+                                            </div>
+                                            <p class="mt-2 text-sm">Global Link Sharing Is Not Enabled.</p>';
+                                        }
+                                        ?>
+
+
                                     </div>
 
                                 </div>
@@ -725,9 +757,27 @@ if (isset($_SESSION['access_token'])) {
                                         class="border-t border-container-dark dark:border-container-light flex gap-2.5 justify-start items-center">
 
                                         <!-- INPUT-22 -->
-                                        <input class="mt-2 size-4 rounded-lg p-4" type="checkbox" id="" name="" checked
-                                            disabled>
-                                        <p class="mt-2 text-sm">Global Search Is Enabled!</p>
+                                        <?php
+
+                                        if ($data[24]) {
+                                            echo '<div class="w-5 h-5 mt-2 p-1 dark:bg-theme-light bg-theme-dark rounded-full">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-auto fill-light-text dark:fill-dark-text" viewBox="0 -960 960 960">
+                                                    <path d="M382-208 122-468l90-90 170 170 366-366 90 90-456 456Z"/> 
+                                                    
+                                                </svg>
+                                                </div>
+                                                <p class="mt-2 text-sm">Global Search Is Enabled.</p>';
+                                        } else {
+                                            echo '<div class="w-5 h-5 mt-2 p-1 dark:bg-theme-light bg-theme-dark rounded-full">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-auto fill-light-text dark:fill-dark-text" viewBox="0 -960 960 960">
+                                                    <path d="m256-168-88-88 224-224-224-224 88-88 224 224 224-224 88 88-224 224 224 224-88 88-224-224-224 224Z"/>
+                                                    
+                                                </svg>
+                                                </div>
+                                                <p class="mt-2 text-sm">Global Search Is Not Enabled.</p>';
+                                        }
+                                        ?>
+
                                     </div>
 
                                 </div>
@@ -751,14 +801,49 @@ if (isset($_SESSION['access_token'])) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Marital Status</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm">NA</p>
+                                <p class="text-sm"><?php echo $data[25]; ?></p>
                             </div>
                         </div>
 
                     </div>
+                </div>
 
 
+            </div>
 
+            <div class="relative border border-theme-dark dark:border-theme-light box-border w-full rounded-3xl">
+                <p class="absolute inline-block -top-3 left-5 px-3 bg-theme-light dark:bg-theme-dark">Template Setting
+                </p>
+
+                <div
+                    class="mb-5 flex flex-col md:flex-row w-full justify-center items-center text-center md:text-left md:justify-start">
+
+                    <div class="inline-flex justify-evenly gap-4 mt-5 w-full px-4 flex-nowrap">
+
+                        <div class="w-full flex flex-col text-start gap-1">
+                            <p class="text-xs">Selected Template</p>
+                            
+                            <div class="flex flex-row items-center mt-1">
+                            
+                                <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-s-10px w-full">
+                                    <p class="text-sm"><?php echo $data[26]; ?></p>
+                                </div>
+
+                                <div class="bg-theme-dark dark:bg-theme-light p-1 fill-light-text dark:fill-dark-text flex item-center h-full rounded-e-10px w-12 justify-center">
+                                <!-- <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 w-full"> -->
+
+                                    <svg class="fill-light-text dark:fill-dark-text w-5"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                                        <path
+                                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z">
+                                        </path>
+                                    </svg>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
 
