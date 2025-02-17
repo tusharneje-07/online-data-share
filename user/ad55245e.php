@@ -1,3 +1,22 @@
+<?php
+require_once './db.php';
+if(!isset($_GET['q'])){
+    echo "User not Found!";
+    exit();
+}
+$uid = $_GET["q"];
+$stmt = $pdo->prepare("SELECT * FROM user_information WHERE uid = ?");
+$stmt->execute([$uid]);
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+if(!$row){
+    echo "User not Found!";
+    exit();
+}
+if($row['template'] != 'TEMP0'){
+    echo "User not Found!";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +24,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TEMP0 => Light Template-1</title>
-    <link rel="stylesheet" href="output.css">
+    <link href="../output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -26,18 +45,21 @@
             <div class="flex flex-row gap-3 mt-8 w-full justify-center md:justify-start h-min">
 
                 <div class="flex md:w-1/4 justify-center items-start">
-                    <div class="w-28 h-28 bg-black rounded-full md:w-36 md:h-36">
-                        
+                    <div class="w-28 h-28 bg-black rounded-full md:w-36 md:h-36 overflow-hidden">
+                    <?php echo '<img src="../imgs/'.$row['uid'].'.png" alt="">'; ?>
                     </div>
                 </div>
 
                 <div class="flex flex-col gap-2 md:w-4/5 ml-2">
                     <p class="font-bold text-xl mt-3">
-                        Tushar Sadshiv Neje
+                        <?php echo $row['fullname'] ?>
                     </p>
 
                     <p class="w-auto text-sm">
-                        About Me
+                        <?php  ?>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas inventore exercitationem nesciunt. Unde nemo temporibus non aut sequi dolore nostrum aliquid esse, animi qui minima consequuntur eius dolores iure adipisci.
+                        Eligendi quaerat neque dolore exercitationem nisi. Deleniti corrupti, quidem expedita aperiam consequatur doloribus earum asperiores optio rerum porro itaque sed eaque sunt, temporibus alias dolores quod a ratione voluptatem libero.
+                        Accusamus fugit veniam dolores molestiae maxime iusto. Ducimus delectus voluptates velit consectetur hic harum voluptatem cupiditate provident sit iure. Aliquid non ad fugiat culpa saepe! Sit voluptates omnis natus iusto.
                     </p>
                 </div>
             </div>
@@ -55,20 +77,20 @@
                         <span class="font-semibold">
                             Date of Birth -
                         </span>
-                        15/07/20005
+                        <?php echo $row['dob'] ?>
                     </p>
                     <p class="text-md">
                         <span class="font-semibold">
                             Height -
                         </span>
-                        6ft
+                        <?php echo $row['height'] ?> ft.
                     </p>
 
                     <p class="text-md">
                         <span class="font-semibold">
                             Weight -
                         </span>
-                        70kg
+                        <?php echo $row['weight'] ?> kg.
                     </p>
                 </div>
             </div>
@@ -86,14 +108,14 @@
                         <span class="font-semibold">
                             Location of Birth -
                         </span>
-                        Ichalkaranji
+                        <?php echo $row['location'] ?>
                     </p>
 
                     <p class="text-md">
                         <span class="font-semibold">
                             Birth Time -
                         </span>
-                        06:55 AM
+                        <?php echo $row['timeofbirth'] ?>
                     </p>
                 </div>
             </div>
@@ -111,14 +133,14 @@
                         <span class="font-semibold">
                             Job/Business -
                         </span>
-                        Not Yet
+                        <?php echo $row['work'] ?>
                     </p>
 
                     <p class="text-md">
                         <span class="font-semibold">
                             Income -
                         </span>
-                        99 LPA
+                        <?php echo $row['income'] ?> LPA
                     </p>
                 </div>
             </div>
@@ -136,7 +158,7 @@
                         <span class="font-semibold">
                             Education -
                         </span>
-                        B.Tech Computer Engineering
+                        <?php echo $row['education'] ?>
                     </p>
                 </div>
             </div>
@@ -154,19 +176,22 @@
                         <span class="font-semibold">
                             Religion -
                         </span>
-                        Hindu
+                        <?php echo $row['religion'] ?>
+
                     </p>
                     <p class="text-md">
                         <span class="font-semibold">
                             Cast -
                         </span>
-                        Koshti
+                        <?php echo $row['caste'] ?>
+
                     </p>
                     <p class="text-md">
                         <span class="font-semibold">
                             Sub-Cast -
                         </span>
-                        Hatagar Koshti
+                        <?php echo $row['subcast'] ?>
+
                     </p>
                 </div>
             </div>
@@ -184,19 +209,22 @@
                         <span class="font-semibold">
                             Rashi -
                         </span>
-                        Tula
+                        <?php echo $row['rashi'] ?>
+
                     </p>
                     <p class="text-md">
                         <span class="font-semibold">
                             Nakshatra -
                         </span>
-                        Swati
+                        <?php echo $row['nakshatra'] ?>
+
                     </p>
                     <p class="text-md">
                         <span class="font-semibold">
                             Birth Name -
                         </span>
-                        IDK
+                        <?php echo $row['birthname'] ?>
+
                     </p>
                 </div>
             </div>
@@ -214,25 +242,28 @@
                         <span class="font-semibold">
                             Father's Information -
                         </span>
-                        NA
+                        <?php echo $row['father'] ?>
+
                     </p>
                     <p class="text-md">
                         <span class="font-semibold">
                             Mother's Information -
                         </span>
-                        Swati
+                        <?php echo $row['mother'] ?>
                     </p>
                     <p class="text-md">
                         <span class="font-semibold">
                             Brother's Information -
                         </span>
-                        IDK
+                        <?php echo $row['brother'] ?>
+
                     </p>
                     <p class="text-md">
                         <span class="font-semibold">
                             Sister's Information -
                         </span>
-                        IDK
+                        <?php echo $row['sister'] ?>
+
                     </p>
                 </div>
             </div>
@@ -250,13 +281,15 @@
                         <span class="font-semibold">
                             Address -
                         </span>
-                        NA
+                        <?php echo $row['address'] ?>
+
                     </p>
                     <p class="text-md">
                         <span class="font-semibold">
                             Contact Information -
                         </span>
-                        Swati
+                        <?php echo $row['contactno'] ?>
+
                     </p>
                 </div>
             </div>
@@ -264,7 +297,16 @@
 
             <div class="w-full mt-5">
                 <p class="text-xs">
-                    Uploaded By neje*****gmail.com
+                    Uploaded By <?php 
+                        $len = strlen($row['owner']);
+                        $stars = $len-3;
+                        $str = '';
+                        for($i = 0; $i < $stars; $i++){
+                            $str .= '*';
+                        }
+                        echo substr($row['owner'],0,3).$str;  
+                    
+                    ?>
                 </p>
             </div>
 

@@ -260,7 +260,25 @@ if (count($data) <= 0) {
                             placeholder="Search Here..." oninput="fetchUserData(this.value)">
 
                         <script>
+                            function getCookie(name) {
+                                let cookies = document.cookie.split('; ');
+                                for (let i = 0; i < cookies.length; i++) {
+                                    let [key, value] = cookies[i].split('=');
+                                    if (key === name) return value;
+                                }
+                                return null;
+                            }
+                            if(getCookie('searchQ') != null && getCookie('searchQ') != '' && getCookie('searchQ').length > 0){
+                                fetchUserData(getCookie('searchQ'))
+                                const clrrecent = document.getElementById('clrrecent');
+                                clrrecent.innerHTML = `Clear Recent`;
+                            }
+                            else{
+                                const clrrecent = document.getElementById('clrrecent');
+                                clrrecent.innerHTML = ``;
+                            }
                             async function fetchUserData(name) {
+                                document.cookie = `searchQ=${name}`;
                                 try {
                                     // Making the POST request to fetch_user.php
                                     const response = await fetch('fetch_user.php', {
@@ -279,8 +297,6 @@ if (count($data) <= 0) {
                                     // Parse the response data
                                     const data = await response.json();
 
-                                    // Log the data to the console
-                                    console.log('User Data:', data);
                                     createUserContainers(data);
                                 } catch (error) {
                                     console.error('Error fetching user data:', error);
@@ -297,7 +313,7 @@ if (count($data) <= 0) {
                                 if (response.status && response.hasrow && response.users.length > 0) {
                                     response.users.forEach(user => {
                                         const userContainer = document.createElement('div');
-                                        userContainer.classList.add('bg-odd-line-light', 'dark:bg-odd-line-dark', 'p-3', 'rounded-10px', 'w-full', 'overflow-hidden', 'flex', 'flex-row', 'flex-wrap', 'gap-4', 'items-start', 'justify-start', 'md:w-[49.5%]', 'relative');
+                                        userContainer.classList.add('bg-odd-line-light', 'dark:bg-odd-line-dark', 'p-3', 'rounded-10px', 'w-full', 'overflow-hidden', 'flex', 'flex-row', 'flex-wrap', 'gap-4', 'items-start', 'justify-start', 'md:w-[49.5%]', 'relative', 'cursor-pointer');
 
                                         const iconDiv = document.createElement('div');
                                         iconDiv.classList.add('absolute', 'bg-theme-dark', 'dark:bg-theme-light', 'w-8', 'h-8', 'top-0', 'right-0', 'rounded-tr-10px', 'rounded-bl-10px', 'text-black', 'flex', 'justify-center', 'items-center');
@@ -361,10 +377,22 @@ if (count($data) <= 0) {
                                         userContainer.appendChild(imgDiv);
                                         userContainer.appendChild(textDiv);
 
+                                        userContainer.onclick = function () {
+                                            window.location.href = `/OnlineBiodataSharingProject/user/?q=${user.uid}`
+                                        }
+
                                         foundedUserDiv.appendChild(userContainer);
                                     });
+                                    const results = document.getElementById('results');
+                                    results.innerHTML = `(${response.users.length}) Result/(s) found.`;
+                                    const clrrecent = document.getElementById('clrrecent');
+                                    clrrecent.innerHTML = `Clear Recent`;
                                 } else {
                                     foundedUserDiv.innerHTML = '<p>No users found.</p>';
+                                    const results = document.getElementById('results');
+                                    const clrrecent = document.getElementById('clrrecent');
+                                    clrrecent.innerHTML = ``;
+                                    results.innerHTML = `Search by Name/DOB/Eductaion`;
                                 }
                             }
 
@@ -382,15 +410,25 @@ if (count($data) <= 0) {
             </div>
 
 
-            <div class="border-theme-dark dark:border-theme-light w-full flex flex-wrap">
+            <div class="border-theme-dark dark:border-theme-light w-full flex flex-wrap" id="searchfunction">
                 <div class="w-full flex flex-row text-start flex-wrap gap-2" id="foundeduser">
+                    Search User by typing their name.
                 </div>
+                <p class="w-full flex flex-row justify-between">
+                    <span id="results" class="mt-2 w-full" style="font-size: 0.7rem;"></span>
+                    <span id="clrrecent" class="mt-2 text-xs w-full flex cursor-pointer justify-end underline-1" onclick="document.cookie = `searchQ=`; fetchUserData(''); document.getElementById('searchQ').value = ''"></span>
+
+                </p>
             </div>
 
 
 
             <p class="text-lg font-bold flex gap-2 items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" class="fill-dark-text dark:fill-light-text"><path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    class="fill-dark-text dark:fill-light-text">
+                    <path
+                        d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z" />
+                </svg>
                 Saved Profiles
             </p>
 

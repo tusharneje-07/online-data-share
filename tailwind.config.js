@@ -45,6 +45,13 @@ module.exports = {
         'toggle-btn-grad-off': '#bfbfbf',
 
         'important-red' : '#ff6363',
+
+        // Template Coloring
+        // TEMP0 => Light Template - 1
+        'TEMP0-o-fill' : '#e3e3e3',
+        'TEMP0-i-fill' : '#f5f8fc',
+
+
       },
 
       fontFamily: {

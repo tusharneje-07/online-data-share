@@ -26,6 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     if($row['linkshare']){
         if($row['maritalstatus'] != 'MARRIED'){
+            if($row['template'] == 'TEMP0'){
+                $_SESSION['TEMP0_SESSION'] = $row;
+                header('Location: ad55245e/?q='.$uid.'');
+                exit();
+            }
             echo "Public Profile<br><br>";
             var_dump($row);
         }
