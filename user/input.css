@@ -32,3 +32,10 @@
         background: theme('colors.gray.700');
     }
 }
+
+@layer components{
+    .card-profile-photo{
+        @apply rounded-br-full;
+        @apply rounded-tl-10px;
+    }
+}

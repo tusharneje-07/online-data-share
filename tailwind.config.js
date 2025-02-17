@@ -5,6 +5,10 @@ module.exports = {
     extend: {
       width:{
         'login-signup-box' : '22rem',
+        'card-profile' : '10rem',
+      },
+      height:{
+        'card-profile' : '10rem',
       },
 
       borderRadius: {

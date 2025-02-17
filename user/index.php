@@ -12,11 +12,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $uid = $_GET['q'];
-    echo $uid;
 
     $stmt = $pdo->prepare("SELECT * FROM user_information WHERE uid = ?");
     $stmt->execute([$uid]);
-    var_dump($stmt->fetch());
+    $row = $stmt->fetch();
+    if(!$row){
+        echo "User Not Found";
+        exit();
+    }
+    if (count($row) <= 0) {
+        echo "User Not Found!";
+        exit();
+    }
+    if($row['linkshare']){
+        if($row['maritalstatus'] != 'MARRIED'){
+            echo "Public Profile<br><br>";
+            var_dump($row);
+        }
+        else{
+            echo "Private Profile";
+        }
+    }
+    else{
+        echo "Private Profile";
+    }
+    
 
 
     
