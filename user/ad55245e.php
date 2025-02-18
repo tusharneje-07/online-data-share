@@ -56,10 +56,8 @@ if($row['template'] != 'TEMP0'){
                     </p>
 
                     <p class="w-auto text-sm">
-                        <?php  ?>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas inventore exercitationem nesciunt. Unde nemo temporibus non aut sequi dolore nostrum aliquid esse, animi qui minima consequuntur eius dolores iure adipisci.
-                        Eligendi quaerat neque dolore exercitationem nisi. Deleniti corrupti, quidem expedita aperiam consequatur doloribus earum asperiores optio rerum porro itaque sed eaque sunt, temporibus alias dolores quod a ratione voluptatem libero.
-                        Accusamus fugit veniam dolores molestiae maxime iusto. Ducimus delectus voluptates velit consectetur hic harum voluptatem cupiditate provident sit iure. Aliquid non ad fugiat culpa saepe! Sit voluptates omnis natus iusto.
+                        <?php echo $row['aboutme'] ?>
+                        
                     </p>
                 </div>
             </div>
@@ -115,7 +113,7 @@ if($row['template'] != 'TEMP0'){
                         <span class="font-semibold">
                             Birth Time -
                         </span>
-                        <?php echo $row['timeofbirth'] ?>
+                        <?php echo DateTime::createFromFormat('H:i',$row['timeofbirth'])->format('h:i A') ?>
                     </p>
                 </div>
             </div>

@@ -129,6 +129,8 @@ foreach ($row as $d) {
 if (count($data) <= 0) {
     // header("Location: profile");
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -1049,7 +1051,7 @@ if (count($data) <= 0) {
     <script>
         function sendToWp(){
             text = document.getElementById('uid_prf').value
-            url = `http://127.0.0.1:8080/OnlineBiodataSharingProject/user/?q=${text}`
+            url = `${window.location.hostname}/OnlineBiodataSharingProject/user/?q=${text}`
             window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, "_blank");
         }
         const popup = document.getElementById("popup");
@@ -1062,7 +1064,7 @@ if (count($data) <= 0) {
         // Function to show popup
         function showPopup(message, seconds) {
             text = document.getElementById('uid_prf').value
-            url = `http://127.0.0.1:8080/OnlineBiodataSharingProject/user/?q=${text}`
+            url = `${window.location.hostname}/OnlineBiodataSharingProject/user/?q=${text}`
             navigator.clipboard.writeText(url);
 
             popupMessage.textContent = message; // Set the message dynamically

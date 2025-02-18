@@ -13,3 +13,5 @@ google_config.php
 .env
 
 user/.env
+
+user/imgs/
