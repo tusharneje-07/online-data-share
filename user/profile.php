@@ -31,11 +31,12 @@ if (isset($_SESSION['access_token'])) {
                 $stmt->execute([$hased, $userInfo->email, $password, 'GACC', '12345']);
 
                 // Setting User in user_info table
-                $stmt = $pdo->prepare("INSERT INTO `user_information`(`uid`, `owner`, `fullname`, `dob`, `height`, `weight`, `location`, `timeofbirth`, `work`, `income`, `education`, `religion`, `caste`, `subcast`, `rashi`, `nakshatra`, `birthname`, `father`, `mother`, `brother`, `sister`, `address`, `contactno`, `linkshare`, `globalsearch`, `maritalstatus`, `template`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $stmt = $pdo->prepare("INSERT INTO `user_information`(`uid`, `owner`, `fullname`, `aboutme`,`dob`, `height`, `weight`, `location`, `timeofbirth`, `work`, `income`, `education`, `religion`, `caste`, `subcast`, `rashi`, `nakshatra`, `birthname`, `father`, `mother`, `brother`, `sister`, `address`, `contactno`, `linkshare`, `globalsearch`, `maritalstatus`, `template`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 $stmt->execute([
                     $hased,
                     $userInfo->email,
                     'NA', // Full Name
+                    '', // About Me
                     'NA', // Date of Birth
                     0.0, // Height
                     0.0, // Weight
@@ -129,7 +130,6 @@ if (count($data) <= 0) {
     // header("Location: profile");
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -146,7 +146,7 @@ if (count($data) <= 0) {
 </head>
 
 <body
-    class="bg-theme-light text-dark-text dark:bg-theme-dark dark:text-light-text transition-colors duration-300 font-Ubuntu">
+    class="bg-theme-light text-dark-text dark:bg-theme-dark dark:text-light-text transition-colors duration-300 font-Ubuntu relative">
 
 
     <main class="m-4 md:m-8 z-0">
@@ -267,7 +267,7 @@ if (count($data) <= 0) {
                         <div class="flex flex-col text-start gap-1 w-full">
                             <div class="flex gap-3 w-full">
 
-                                <Button
+                                <Button onclick="document.getElementById('sharecont').classList.remove('hidden'); toggleShareCont(1);"
                                     class="flex flex-row gap-2 bg-odd-line-light dark:bg-odd-line-dark rounded-10px h-full w-full ">
                                     <div
                                         class="flex items-center bg-theme-dark dark:bg-theme-light p-halfp rounded-s-10px h-full">
@@ -406,7 +406,14 @@ if (count($data) <= 0) {
 
                         <!-- Name -->
                         <div class="p-4 rounded-10px dark:bg-odd-line-dark bg-odd-line-light">
-                            <p class="text-lg font-semibold"><?php echo $data[2]; ?></p>
+                            <p class="text-lg font-semibold">
+                                <?php echo $data[2]; ?>
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-10px dark:bg-odd-line-dark bg-odd-line-light">
+                            <p class="text-sm">
+                                <?php echo $data[3]; ?>
+                            </p>
                         </div>
                     </div>
                     <!-- General Info -->
@@ -415,21 +422,27 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Date of Birth</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[3]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[4]; ?>
+                                </p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Height</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[4]; ?> Ft</p>
+                                <p class="text-sm">
+                                    <?php echo $data[5]; ?> Ft
+                                </p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Weight</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[5]; ?> kgs</p>
+                                <p class="text-sm">
+                                    <?php echo $data[6]; ?> kgs
+                                </p>
                             </div>
                         </div>
 
@@ -450,7 +463,9 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Location of Birth</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[6]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[7]; ?>
+                                </p>
                             </div>
                         </div>
 
@@ -458,7 +473,9 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Time of Birth</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo strtotime($data[7]); ?></p>
+                                <p class="text-sm">
+                                    <?php echo DateTime::createFromFormat('H:i', $data[8])->format('h:i A') ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -481,14 +498,18 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Job/Business</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[8]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[9]; ?>
+                                </p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Income</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[9]; ?> LPA</p>
+                                <p class="text-sm">
+                                    <?php echo $data[10]; ?> LPA
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -511,7 +532,9 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Education</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[10]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[11]; ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -535,7 +558,9 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Religion</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[11]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[12]; ?>
+                                </p>
                             </div>
                         </div>
 
@@ -543,14 +568,18 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Caste</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[12]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[13]; ?>
+                                </p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Sub Caste</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[13]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[14]; ?>
+                                </p>
                             </div>
                         </div>
 
@@ -573,14 +602,18 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Rashi</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[14]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[15]; ?>
+                                </p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Nakshatra</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[15]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[16]; ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -590,7 +623,9 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Birth Name (Navras Nav)</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[16]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[17]; ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -612,28 +647,36 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Father's Name & Occupation</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[17]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[18]; ?>
+                                </p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Mother's Name & Occupation</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[18]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[19]; ?>
+                                </p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Brother's Name & Occupation</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[19]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[20]; ?>
+                                </p>
                             </div>
                         </div>
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Sister's Name & Occupation</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[20]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[21]; ?>
+                                </p>
                             </div>
                         </div>
 
@@ -658,7 +701,8 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Address</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[21]; ?>
+                                <p class="text-sm">
+                                    <?php echo $data[22]; ?>
                                 </p>
                             </div>
                         </div>
@@ -666,7 +710,9 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Contact Number</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[22]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[23]; ?>
+                                </p>
                             </div>
                         </div>
 
@@ -712,7 +758,7 @@ if (count($data) <= 0) {
                                         <!-- INPUT-21 -->
                                         <?php
 
-                                        if ($data[23]) {
+                                        if ($data[24]) {
                                             echo '<div class="w-5 h-5 mt-2 p-1 dark:bg-theme-light bg-theme-dark rounded-full">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-auto fill-light-text dark:fill-dark-text" viewBox="0 -960 960 960">
                                                 <path d="M382-208 122-468l90-90 170 170 366-366 90 90-456 456Z"/> 
@@ -761,7 +807,7 @@ if (count($data) <= 0) {
                                         <!-- INPUT-22 -->
                                         <?php
 
-                                        if ($data[24]) {
+                                        if ($data[25]) {
                                             echo '<div class="w-5 h-5 mt-2 p-1 dark:bg-theme-light bg-theme-dark rounded-full">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-auto fill-light-text dark:fill-dark-text" viewBox="0 -960 960 960">
                                                     <path d="M382-208 122-468l90-90 170 170 366-366 90 90-456 456Z"/> 
@@ -803,7 +849,9 @@ if (count($data) <= 0) {
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Marital Status</p>
                             <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-10px">
-                                <p class="text-sm"><?php echo $data[25]; ?></p>
+                                <p class="text-sm">
+                                    <?php echo $data[26]; ?>
+                                </p>
                             </div>
                         </div>
 
@@ -824,15 +872,18 @@ if (count($data) <= 0) {
 
                         <div class="w-full flex flex-col text-start gap-1">
                             <p class="text-xs">Selected Template</p>
-                            
+
                             <div class="flex flex-row items-center mt-1">
-                            
+
                                 <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 rounded-s-10px w-full">
-                                    <p class="text-sm"><?php echo $data[26]; ?></p>
+                                    <p class="text-sm">
+                                        <?php echo $data[27]; ?>
+                                    </p>
                                 </div>
 
-                                <div class="bg-theme-dark dark:bg-theme-light p-1 fill-light-text dark:fill-dark-text flex item-center h-full rounded-e-10px w-12 justify-center cursor-pointer">
-                                <!-- <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 w-full"> -->
+                                <div
+                                    class="bg-theme-dark dark:bg-theme-light p-1 fill-light-text dark:fill-dark-text flex item-center h-full rounded-e-10px w-12 justify-center cursor-pointer">
+                                    <!-- <div class="bg-odd-line-light dark:bg-odd-line-dark p-3 w-full"> -->
 
                                     <svg class="fill-light-text dark:fill-dark-text w-5"
                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
@@ -854,6 +905,74 @@ if (count($data) <= 0) {
         </div>
 
     </main>
+
+    <script>
+        function toggleShareCont(num) {
+            let shareCont = document.getElementById("sharecont");
+
+            if (shareCont.classList.contains("translate-y-full")) {
+                shareCont.classList.remove("translate-y-full", "opacity-0");
+                shareCont.classList.add("translate-y-0", "opacity-100");
+            } else {
+                shareCont.classList.add("translate-y-full", "opacity-0");
+                shareCont.classList.remove("translate-y-0", "opacity-100");
+            }
+        }
+
+    </script>
+
+    <div class="fixed w-full dark:bg-theme-light bg-theme-dark bottom-0 left-0 z-30 h-48 rounded-t-3xl transition-all duration-300 transform translate-y-full opacity-0"
+        id="sharecont">
+        <p class="flex justify-between dark:text-dark-text text-light-text mt-4 mx-5 mb-0">
+            Share using
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px"
+                class="dark:fill-dark-text fill-light-text">
+                <path
+                    d="M680-80q-50 0-85-35t-35-85q0-6 3-28L282-392q-16 15-37 23.5t-45 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q24 0 45 8.5t37 23.5l281-164q-2-7-2.5-13.5T560-760q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-24 0-45-8.5T598-672L317-508q2 7 2.5 13.5t.5 14.5q0 8-.5 14.5T317-452l281 164q16-15 37-23.5t45-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T720-200q0-17-11.5-28.5T680-240q-17 0-28.5 11.5T640-200q0 17 11.5 28.5T680-160ZM200-440q17 0 28.5-11.5T240-480q0-17-11.5-28.5T200-520q-17 0-28.5 11.5T160-480q0 17 11.5 28.5T200-440Zm480-280q17 0 28.5-11.5T720-760q0-17-11.5-28.5T680-800q-17 0-28.5 11.5T640-760q0 17 11.5 28.5T680-720Zm0 520ZM200-480Zm480-280Z" />
+            </svg>
+        </p>
+        <div class="flex flex-row p-3 h-min w-full justify-around items-center">
+            <div class="flex flex-col justify-center items-center" onclick="showPopup('URL Copied to Clipboard',3)">
+                <div
+                    class="flex justify-center items-center w-16 h-16 rounded-full dark:bg-theme-dark bg-theme-light cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="28px"
+                        class="dark:fill-light-text fill-dark-text">
+                        <path
+                            d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
+                    </svg>
+                </div>
+                <p class="dark:text-dark-text text-light-text text-sm mt-1">Copy URL</p>
+            </div>
+
+            <div class="flex flex-col justify-center items-center" onclick="sendToWp()">
+                <div
+                    class="flex justify-center items-center w-16 h-16 rounded-full dark:bg-theme-dark bg-theme-light cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48">
+                        <path fill="#fff"
+                            d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z">
+                        </path>
+                        <path fill="#fff"
+                            d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z">
+                        </path>
+                        <path fill="#cfd8dc"
+                            d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z">
+                        </path>
+                        <path fill="#40c351"
+                            d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z">
+                        </path>
+                        <path fill="#fff" fill-rule="evenodd"
+                            d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <p class="dark:text-dark-text text-light-text text-sm mt-1">WhatsApp</p>
+            </div>
+        </div>
+        <div class="flex mt-1 flex-row h-min w-full justify-around items-center cursor-pointer">
+            <p class="dark:text-dark-text text-light-text font-bold"
+                onclick="toggleShareCont(0)">Close</p>
+        </div>
+    </div>
 
     <br>
     <br>
@@ -912,6 +1031,58 @@ if (count($data) <= 0) {
 
         </div>
     </div>
+    <div id="popup"
+        class="hidden z-30 fixed top-10 left-1/2 transform -translate-x-1/2 dark:bg-theme-light bg-theme-dark rounded-md w-96">
+        <!-- Popup Content -->
+        <div class="flex justify-between items-center px-4 py-3">
+            <p id="popupMessage" class="text-light-text dark:text-dark-text font-medium"></p>
+            <button id="closeBtn" class="text-light-text dark:text-dark-text hover:text-red-500">
+                &times;
+            </button>
+        </div>
+        <!-- Animated Border -->
+        <div id="border-loader" class="h-1 rounded-md dark:bg-gray-400 bg-odd-line-dark animate-[grow_2s_linear]"></div>
+    </div>
+
+
+
+    <script>
+        function sendToWp(){
+            text = document.getElementById('uid_prf').value
+            url = `http://127.0.0.1:8080/OnlineBiodataSharingProject/user/?q=${text}`
+            window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, "_blank");
+        }
+        const popup = document.getElementById("popup");
+        const popupMessage = document.getElementById("popupMessage");
+        const closeBtn = document.getElementById("closeBtn");
+        const borderloader = document.getElementById('border-loader');
+
+        let timeout;
+
+        // Function to show popup
+        function showPopup(message, seconds) {
+            text = document.getElementById('uid_prf').value
+            url = `http://127.0.0.1:8080/OnlineBiodataSharingProject/user/?q=${text}`
+            navigator.clipboard.writeText(url);
+
+            popupMessage.textContent = message; // Set the message dynamically
+            popup.classList.remove("hidden");
+
+            // Close after 2 seconds
+            timeout = setTimeout(() => {
+                closePopup();
+            }, seconds * 1000);
+        }
+
+        // Function to close popup
+        function closePopup() {
+            popup.classList.add("hidden");
+            clearTimeout(timeout);
+        }
+
+        // Event Listener for close button
+        closeBtn.addEventListener("click", closePopup);
+    </script>
 
 
     <script src="./theme-toggle.js"></script>

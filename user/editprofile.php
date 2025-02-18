@@ -286,12 +286,21 @@ $nakshatras = [
                                         <!-- INPUT-1 -->
                                         <?php
                                         echo '<input class="bg-transparent outline-none" type="text" id="inp1" name="inp1" value="' . htmlspecialchars($row['fullname']) . '">'; ?>
-
-
                                     </div>
                                     </p>
                             </div>
+
+                            
                         </div>
+                        <div class="flex flex-row p-4 rounded-10px dark:bg-odd-line-dark bg-odd-line-light">
+                                <p class="text-sm">
+                                    <div class="relative w-full">
+                                        <!-- INPUT-1 -->
+                                        <?php
+                                        echo '<input class="bg-transparent outline-none" type="text" id="aboutme" name="aboutme" placeholder="Enter About Me" value="' . htmlspecialchars($row['aboutme']) . '">'; ?>
+                                    </div>
+                                    </p>
+                            </div>
 
                     </div>
                     <!-- General Info -->
@@ -1501,7 +1510,7 @@ if (isset($_POST['save-information'])) {
         $data[$key] = array_key_exists($key, $data) ? "1" : "0";
     }
 
-    $stmt = $pdo->prepare("UPDATE user_information SET `fullname`=?,`dob`=?,`height`=?,`weight`=?,`location`=?,`timeofbirth`=?,`work`=?,`income`=?,`education`=?,`religion`=?,`caste`=?,`subcast`=?,`rashi`=?,`nakshatra`=?,`birthname`=?,`father`=?,`mother`=?,`brother`=?,`sister`=?,`address`=?,`contactno`=?,`linkshare`=?,`globalsearch`=?,`maritalstatus`=? WHERE uid = ?");
+    $stmt = $pdo->prepare("UPDATE user_information SET `fullname`=?, `aboutme`=?,`dob`=?,`height`=?,`weight`=?,`location`=?,`timeofbirth`=?,`work`=?,`income`=?,`education`=?,`religion`=?,`caste`=?,`subcast`=?,`rashi`=?,`nakshatra`=?,`birthname`=?,`father`=?,`mother`=?,`brother`=?,`sister`=?,`address`=?,`contactno`=?,`linkshare`=?,`globalsearch`=?,`maritalstatus`=? WHERE uid = ?");
 
 
 
@@ -1509,6 +1518,7 @@ if (isset($_POST['save-information'])) {
     if (
         $stmt->execute([
             $data['inp1'],
+            $data['aboutme'],
             $data['inp2'],
             $data['inp3'],
             $data['inp4'],
