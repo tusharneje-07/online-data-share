@@ -1,18 +1,41 @@
+<?php
+require_once './db.php';
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    header('Location: home');
+    exit();
+}
+if (!isset($_GET['q'])) {
+    echo "User not Found!";
+    exit();
+}
+$uid = $_GET["q"];
+$stmt = $pdo->prepare("SELECT * FROM user_information WHERE uid = ?");
+$stmt->execute([$uid]);
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+if (!$row) {
+    echo "User not Found!";
+    exit();
+}
+if ($row['template'] != 'TEMP1') {
+    echo "User not Found!";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link href="./output.css" rel="stylesheet">
+    <title>Template 2</title>
+    <link href="../output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
     <style>
-        ::-webkit-scrollbar{
+        ::-webkit-scrollbar {
             display: none;
         }
     </style>
@@ -21,15 +44,23 @@
 <body class="font-Ubuntu text-white">
     <div class="fixed bg-white w-full flex justify-between items-center p-3 px-4 z-20 rounded-b-10px">
 
-        <div class="flex gap-1 items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill:black" viewBox="0 -960 960 960"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
-            <p class="text-black text-lg font-bold">Back</p>
-        </div>
-        
+        <form action="/OnlineBiodataSharingProject/user/345c75e4.php" method="post">
+            <button>
+                <div class="flex gap-1 items-center cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill:black" viewBox="0 -960 960 960">
+                        <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" />
+                    </svg>
+                    <p class="text-black text-lg font-bold">Back</p>
+                </button>
+            </div>
+        </form>
+
+
         <div class="flex gap-1 items-center">
             <div class="bg-TEMP1-i-fill w-10 h-10 flex justify-center items-center rounded-full p-2.5 cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" lass="w-4 h-4" fill="#fff" viewBox="0 -960 960 960">
-                    <path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z"/>
+                    <path
+                        d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z" />
                 </svg>
             </div>
         </div>
@@ -45,7 +76,7 @@
 
                 <div class="flex md:w-1/4 justify-center items-start">
                     <div class="w-28 h-28 bg-white rounded-full md:w-36 md:h-36 overflow-hidden">
-                    <?php echo '<img src="../imgs/'.$row['uid'].'.png" alt="">'; ?>
+                        <?php echo '<img src="../imgs/' . $row['uid'] . '.png" alt="">'; ?>
                     </div>
                 </div>
 
@@ -56,7 +87,7 @@
 
                     <p class="w-auto text-sm">
                         <?php echo $row['aboutme'] ?>
-                        
+
                     </p>
                 </div>
             </div>
@@ -112,7 +143,7 @@
                         <span class="font-semibold">
                             Birth Time -
                         </span>
-                        <?php echo DateTime::createFromFormat('H:i',$row['timeofbirth'])->format('h:i A') ?>
+                        <?php echo DateTime::createFromFormat('H:i', $row['timeofbirth'])->format('h:i A') ?>
                     </p>
                 </div>
             </div>
@@ -294,15 +325,15 @@
 
             <div class="w-full mt-5">
                 <p class="text-xs">
-                    Uploaded By <?php 
-                        $len = strlen($row['owner']);
-                        $stars = $len-3;
-                        $str = '';
-                        for($i = 0; $i < $stars; $i++){
-                            $str .= '*';
-                        }
-                        echo substr($row['owner'],0,3).$str;  
-                    
+                    Uploaded By <?php
+                    $len = strlen($row['owner']);
+                    $stars = $len - 3;
+                    $str = '';
+                    for ($i = 0; $i < $stars; $i++) {
+                        $str .= '*';
+                    }
+                    echo substr($row['owner'], 0, 3) . $str;
+
                     ?>
                 </p>
             </div>

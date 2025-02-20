@@ -51,6 +51,10 @@ module.exports = {
         'TEMP0-o-fill' : '#e3e3e3',
         'TEMP0-i-fill' : '#f5f8fc',
 
+        // TEMP0 => Light Template - 1
+        'TEMP1-o-fill' : '#363636',
+        'TEMP1-i-fill' : '#212121',
+
 
       },
 

@@ -31,6 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header('Location: ad55245e/?q='.$uid.'');
                 exit();
             }
+            if($row['template'] == 'TEMP1'){
+                $_SESSION['TEMP0_SESSION'] = $row;
+                header('Location: 345c75e4/?q='.$uid.'');
+                exit();
+            }
             echo "Public Profile<br><br>";
             var_dump($row);
         }
